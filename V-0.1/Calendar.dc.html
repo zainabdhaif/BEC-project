@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Deadlines calendar — Bahrain Early Careers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&family=Poppins:wght@600&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;background:#ffffff;color:#2b2523;font-family:"IBM Plex Sans","IBM Plex Sans Arabic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#a93d35;text-underline-offset:3px}
+a:hover{color:#8e322c}
+:focus-visible{outline:2px solid #a93d35;outline-offset:2px}
+</style>
+</helmet>
+<dc-import name="SiteHeader" current="calendar" hint-size="100%,80px"></dc-import>
+
+<main style="max-width:1264px;margin:0 auto;padding:64px {{ gutter }} 0">
+  <h1 style="margin:0;font:600 {{ h1Font }} Poppins,'IBM Plex Sans Arabic',system-ui,sans-serif;letter-spacing:-0.01em;color:#2b2523">Deadlines calendar</h1>
+  <p style="margin:8px 0 0;font:400 16px/26px 'IBM Plex Sans',system-ui,sans-serif;color:#5e5653">Application deadlines for internships, graduate programmes and entry-level jobs in Bahrain.</p>
+
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <div role="group" aria-label="Calendar view" style="margin-top:24px;display:flex;gap:8px">
+      <button type="button" aria-pressed="{{ isAgenda }}" onClick="{{ showAgenda }}" style="flex:1;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid {{ agendaBorder }};background:{{ agendaBg }};color:{{ agendaColor }};cursor:pointer;font:600 15px/20px 'IBM Plex Sans',system-ui,sans-serif">Agenda</button>
+      <button type="button" aria-pressed="{{ isMonthView }}" onClick="{{ showMonth }}" style="flex:1;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid {{ monthBorder }};background:{{ monthBg }};color:{{ monthColor }};cursor:pointer;font:600 15px/20px 'IBM Plex Sans',system-ui,sans-serif">Month</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showGrid }}" hint-placeholder-val="{{ true }}">
+    <section aria-labelledby="bec-month-title" style="margin-top:32px;background:#ffffff;border:1px solid #e7dfd9;border-radius:12px;padding:{{ boxPad }}">
+      <div style="display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:8px">
+        <h3 id="bec-month-title" aria-live="polite" style="margin:0;min-width:0;font:600 {{ h3Font }} Poppins,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#2b2523">{{ monthTitle }}</h3>
+        <div style="flex:none;display:flex;align-items:center;gap:8px">
+          <button type="button" onClick="{{ prevMonth }}" aria-label="Previous month" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#ffffff;border:1px solid #8c8380;border-radius:8px;cursor:pointer;color:#2b2523" style-hover="background:#faf7f4;border-color:#2b2523">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3.5L5.5 8l4.5 4.5"></path></svg>
+          </button>
+          <button type="button" onClick="{{ nextMonth }}" aria-label="Next month" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#ffffff;border:1px solid #8c8380;border-radius:8px;cursor:pointer;color:#2b2523" style-hover="background:#faf7f4;border-color:#2b2523">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5L10.5 8 6 12.5"></path></svg>
+          </button>
+          <button type="button" onClick="{{ goToday }}" style="min-height:44px;padding:0 16px;background:#ffffff;border:1px solid #8c8380;border-radius:8px;cursor:pointer;color:#2b2523;font:600 15px/20px 'IBM Plex Sans',system-ui,sans-serif;padding-inline:{{ todayPad }}" style-hover="background:#faf7f4;border-color:#2b2523">Today</button>
+        </div>
+      </div>
+
+      <div aria-hidden="true" style="margin-top:{{ namesTop }};display:grid;grid-template-columns:repeat(7,minmax(0,1fr));column-gap:{{ cellGap }}">
+        <sc-for list="{{ dayNames }}" as="dn" hint-placeholder-count="7">
+          <span style="padding:8px 0;text-align:{{ nameAlign }};padding-inline-start:{{ namePad }};font:600 12px/16px 'IBM Plex Sans',system-ui,sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:#5e5653">{{ dn }}</span>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:{{ cellGap }}">
+        <sc-for list="{{ cells }}" as="c" hint-placeholder-count="35">
+          <sc-if value="{{ c.isBlank }}" hint-placeholder-val="{{ false }}">
+            <div aria-hidden="true" style="height:{{ cellH }}"></div>
+          </sc-if>
+          <sc-if value="{{ c.isDay }}" hint-placeholder-val="{{ true }}">
+            <button type="button" onClick="{{ c.select }}" onMouseEnter="{{ c.enter }}" onMouseLeave="{{ c.leave }}" aria-label="{{ c.aria }}" aria-pressed="{{ c.pressed }}" style="height:{{ cellH }};min-width:0;display:flex;flex-direction:column;align-items:{{ cellAlign }};justify-content:{{ cellJustify }};gap:4px;padding:{{ cellPad }};border:0;border-radius:8px;background:{{ c.bg }};box-shadow:{{ c.ring }};cursor:pointer;color:{{ c.color }}">
+              <span style="font:500 14px/20px 'IBM Plex Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums">{{ c.num }}</span>
+              <span style="height:16px;display:flex;align-items:center;gap:4px">
+                <sc-if value="{{ c.hasDots }}" hint-placeholder-val="{{ false }}">
+                  <span style="width:6px;height:6px;border-radius:999px;background:{{ c.dotColor }};flex:none"></span>
+                </sc-if>
+                <sc-if value="{{ c.hasCount }}" hint-placeholder-val="{{ false }}">
+                  <span style="font:600 14px/16px 'IBM Plex Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums;color:{{ c.countColor }}">{{ c.count }}</span>
+                </sc-if>
+              </span>
+            </button>
+          </sc-if>
+        </sc-for>
+      </div>
+      <p style="margin:16px 0 0;display:flex;align-items:center;gap:8px;font:400 14px/22px 'IBM Plex Sans',system-ui,sans-serif;color:#5e5653">
+        <span aria-hidden="true" style="width:6px;height:6px;border-radius:999px;background:#d95d51;flex:none"></span>
+        Dots mark application deadlines.
+      </p>
+    </section>
+  </sc-if>
+
+  <section aria-label="Deadline lists" style="margin-top:{{ tabsTop }}">
+    <div role="tablist" aria-label="Deadline lists" style="display:flex;flex-wrap:wrap;column-gap:{{ tabGap }};row-gap:0;border-bottom:1px solid #e7dfd9">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2">
+        <button type="button" role="tab" id="bec-tab-{{ t.key }}" aria-selected="{{ t.active }}" aria-controls="bec-tabpanel" tabIndex="{{ t.tabIndex }}" onClick="{{ t.select }}" onKeyDown="{{ tabKey }}" data-tab="{{ t.key }}" style="flex:none;min-height:48px;display:flex;align-items:center;padding:0;margin-bottom:-1px;background:none;border:0;border-bottom:2px solid {{ t.underline }};cursor:pointer;color:{{ t.color }};white-space:nowrap;font:{{ t.weight }} 15px/24px 'IBM Plex Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums" style-hover="color:#2b2523">{{ t.label }}</button>
+      </sc-for>
+    </div>
+
+    <div id="bec-tabpanel" role="tabpanel" aria-labelledby="bec-tab-{{ activeTab }}">
+      <sc-if value="{{ isDayTab }}" hint-placeholder-val="{{ false }}">
+        <sc-for list="{{ dayRows }}" as="item" hint-placeholder-count="3">
+          <dc-import name="OpportunityRow" opp="{{ item }}" on-open="{{ openOpp }}" hint-size="100%,131px"></dc-import>
+        </sc-for>
+        <sc-if value="{{ dayEmpty }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0;padding:24px 0;border-bottom:1px solid #e7dfd9;font:400 16px/26px 'IBM Plex Sans',system-ui,sans-serif;color:#5e5653">{{ dayEmptyText }}</p>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ isNextTab }}" hint-placeholder-val="{{ true }}">
+        <sc-for list="{{ nextRows }}" as="item" hint-placeholder-count="5">
+          <dc-import name="OpportunityRow" opp="{{ item }}" on-open="{{ openOpp }}" hint-size="100%,131px"></dc-import>
+        </sc-for>
+        <div style="padding-top:16px">
+          <a href="Opportunities.dc.html?sort=deadline" style="min-height:44px;display:inline-flex;align-items:center;color:#a93d35;text-decoration:underline;text-underline-offset:3px;font:600 15px/20px 'IBM Plex Sans',system-ui,sans-serif">View all by deadline</a>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAgendaTab }}" hint-placeholder-val="{{ false }}">
+        <sc-for list="{{ weeks }}" as="w" hint-placeholder-count="3">
+          <div style="padding-top:24px">
+            <h2 style="margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font:600 20px/28px Poppins,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#2b2523">
+              {{ w.title }}
+              <span style="font:400 14px/22px 'IBM Plex Sans',system-ui,sans-serif;color:#5e5653;font-variant-numeric:tabular-nums">{{ w.range }}</span>
+            </h2>
+            <div style="margin-top:8px;border-top:1px solid #e7dfd9">
+              <sc-for list="{{ w.rows }}" as="item" hint-placeholder-count="2">
+                <dc-import name="OpportunityRow" opp="{{ item }}" on-open="{{ openOpp }}" hint-size="100%,160px"></dc-import>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </sc-if>
+
+      <sc-if value="{{ isNoFixedTab }}" hint-placeholder-val="{{ false }}">
+        <sc-for list="{{ noFixedRows }}" as="item" hint-placeholder-count="3">
+          <dc-import name="OpportunityRow" opp="{{ item }}" on-open="{{ openOpp }}" hint-size="100%,131px"></dc-import>
+        </sc-for>
+      </sc-if>
+    </div>
+  </section>
+</main>
+
+<div style="margin-top:64px">
+  <dc-import name="SiteFooter" hint-size="100%,300px"></dc-import>
+</div>
+
+<sc-if value="{{ hasSelected }}" hint-placeholder-val="{{ false }}">
+  <dc-import name="DetailPanel" opp="{{ selected }}" on-close="{{ closePanel }}" hint-size="0px,0px"></dc-import>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const TODAY = Date.UTC(2026, 9, 11);
+const TODAY_ISO = '2026-10-11';
+const TYPE = { internship: 'Internship', full_time: 'Full-time', gtp: 'Graduate programme' };
+const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const STATUS = {
+  urgent: { fg: '#a93d35', bg: '#fbeae6' },
+  soon: { fg: '#8a5300', bg: '#fdf1dc' },
+  open: { fg: '#2f6b4f', bg: '#e8f3ec' }
+};
+const bpOf = () => { const w = window.innerWidth; return w < 600 ? 'mobile' : w < 1024 ? 'tablet' : 'desktop'; };
+const pad = (n) => String(n).padStart(2, '0');
+const isoOf = (t) => { const d = new Date(t); return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`; };
+const tOf = (iso) => { const [y, m, d] = iso.split('-').map(Number); return Date.UTC(y, m - 1, d); };
+const dayDiff = (iso) => Math.round((tOf(iso) - TODAY) / 864e5);
+
+function deadlineInfo(iso) {
+  if (!iso) return { hasDate: false, noDate: true, label: 'DEADLINE', labelColor: '#5e5653', hasRel: false };
+  const [y, m, d] = iso.split('-').map(Number);
+  const days = dayDiff(iso);
+  const wd = WD[new Date(tOf(iso)).getUTCDay()];
+  const status = days <= 7 ? 'urgent' : days <= 14 ? 'soon' : 'open';
+  const relWord = days === 0 ? 'TODAY' : days === 1 ? 'TOMORROW' : '';
+  const statusText = status === 'open' ? 'Open'
+    : days === 0 ? 'Closes today' : days === 1 ? 'Closes tomorrow' : `Closes in ${days} days`;
+  return {
+    hasDate: true, noDate: false, days, dateText: `${wd} ${d} ${MO[m - 1]} ${y}`,
+    label: relWord || 'DEADLINE', labelColor: relWord ? '#a93d35' : '#5e5653', hasRel: !!relWord, relWord,
+    statusText, ...STATUS[status], isUrgent: status === 'urgent', isSoon: status === 'soon', isOpen: status === 'open'
+  };
+}
+const initials = (name) => name.split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+
+class Component extends DCLogic {
+  state = { data: null, bp: bpOf(), y: 2026, m: 9, selDay: null, tab: 'next', view: 'agenda', hoverIso: null, selectedId: null };
+
+  componentDidMount() {
+    const st = new URLSearchParams(location.search).get('state');
+    fetch('data/dummy-data.json').then(r => r.json()).then(data => {
+      const next = { data };
+      if (st === 'month') next.view = 'month';
+      if (st === 'day') Object.assign(next, { view: 'month', selDay: '2026-10-20', tab: 'day' });
+      if (st === 'panel') next.selectedId = 4;
+      if (st === 'nofixed') next.tab = 'nofixed';
+      this.setState(next);
+    });
+    this.onResize = () => { const bp = bpOf(); if (bp !== this.state.bp) this.setState({ bp }); };
+    window.addEventListener('resize', this.onResize);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); document.body.style.overflow = ''; }
+  componentDidUpdate(pp, ps) {
+    if (!!ps.selectedId !== !!this.state.selectedId) document.body.style.overflow = this.state.selectedId ? 'hidden' : '';
+  }
+
+  build() {
+    if (this._for === this.state.data) return this._built;
+    const { companies, opportunities } = this.state.data;
+    const cmap = Object.fromEntries(companies.map(c => [c.company_id, c]));
+    const opps = opportunities
+      .filter(o => !o.hidden && (!o.deadline_date || dayDiff(o.deadline_date) >= 0))
+      .map(o => {
+        const c = cmap[o.company_id];
+        const anyMajor = o.major.includes('Any major');
+        const majors = o.major.filter(m => m !== 'Any major');
+        return {
+          id: o.opportunity_id, title: o.title, company: c.name, sector: c.sector, iso: o.deadline_date || null,
+          initials: initials(c.name), logoUrl: c.logo_url || '', hasLogo: !!c.logo_url, noLogo: !c.logo_url,
+          location: o.location, typeKey: o.type, typeLabel: TYPE[o.type], typeEyebrow: TYPE[o.type].toUpperCase(),
+          meta: `${o.location} · ${TYPE[o.type]}`, companyLine: `${c.name} · ${o.location}`,
+          majors, anyMajor, majorsText: anyMajor ? 'Any major' : majors.join(', '),
+          link: o.opportunity_link, applyLabel: `Apply for ${o.title} at ${c.name} (opens employer site)`,
+          requirements: o.requirements, paragraphs: o.description.split(/\n\n+/),
+          deadline: deadlineInfo(o.deadline_date)
+        };
+      });
+    const byTitle = (a, b) => a.title.localeCompare(b.title);
+    const dated = opps.filter(o => o.iso).sort((a, b) => a.iso.localeCompare(b.iso) || byTitle(a, b));
+    const noFixed = opps.filter(o => !o.iso).sort(byTitle);
+    const byDay = {};
+    dated.forEach(o => { (byDay[o.iso] = byDay[o.iso] || []).push(o); });
+    this._for = this.state.data;
+    this._built = { opps, dated, noFixed, byDay };
+    return this._built;
+  }
+
+  dayLabel(iso, n) { const t = tOf(iso), d = new Date(t); return `${WD[d.getUTCDay()]} ${d.getUTCDate()} ${MO[d.getUTCMonth()]} · ${n}`; }
+
+  renderVals() {
+    const s = this.state;
+    const bp = s.bp, mob = bp === 'mobile';
+    const agenda = mob && s.view === 'agenda';
+    const sel = (on) => ({ border: on ? '#2b2523' : '#8c8380', bg: on ? '#2b2523' : '#ffffff', color: on ? '#ffffff' : '#2b2523' });
+    const aS = sel(agenda), mS = sel(mob && !agenda);
+    const base = {
+      isMobile: mob, isAgenda: agenda, isMonthView: !agenda, showGrid: !agenda,
+      agendaBorder: aS.border, agendaBg: aS.bg, agendaColor: aS.color,
+      monthBorder: mS.border, monthBg: mS.bg, monthColor: mS.color,
+      showAgenda: () => this.setState({ view: 'agenda', tab: s.tab === 'nofixed' ? 'nofixed' : 'next' }),
+      showMonth: () => this.setState({ view: 'month' }),
+      gutter: bp === 'desktop' ? '32px' : bp === 'tablet' ? '24px' : '16px',
+      h1Font: mob ? '28px/36px' : '36px/44px',
+      boxPad: mob ? '16px 8px' : '24px',
+      h3Font: mob ? '18px/26px' : '20px/28px',
+      todayPad: mob ? '12px' : '16px',
+      tabGap: mob ? '16px' : '24px',
+      namesTop: mob ? '12px' : '16px',
+      cellGap: mob ? '0px' : '4px',
+      cellH: bp === 'desktop' ? '80px' : bp === 'tablet' ? '64px' : '48px',
+      cellAlign: mob ? 'center' : 'flex-start',
+      cellJustify: mob ? 'center' : 'space-between',
+      cellPad: mob ? '4px 0' : '8px 12px',
+      nameAlign: mob ? 'center' : 'start', namePad: mob ? '0px' : '12px',
+      tabsTop: mob ? (agenda ? '24px' : '32px') : '32px',
+      dayNames: WD,
+      monthTitle: `${MONTHS[s.m]} ${s.y}`,
+      prevMonth: () => this.setState(st => st.m === 0 ? { m: 11, y: st.y - 1 } : { m: st.m - 1 }),
+      nextMonth: () => this.setState(st => st.m === 11 ? { m: 0, y: st.y + 1 } : { m: st.m + 1 }),
+      goToday: () => this.setState({ y: 2026, m: 9, selDay: TODAY_ISO, tab: 'day' }),
+      openOpp: (id, trigger) => { this.trigger = trigger; this.setState({ selectedId: id }); },
+      closePanel: () => { const t = this.trigger; this.setState({ selectedId: null }, () => { t && t.focus && t.focus(); }); },
+      tabKey: (e) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+        const list = [...e.currentTarget.parentElement.querySelectorAll('[role=tab]')];
+        const i = list.indexOf(e.currentTarget);
+        const rtl = getComputedStyle(e.currentTarget).direction === 'rtl';
+        let j = e.key === 'Home' ? 0 : e.key === 'End' ? list.length - 1 : i + ((e.key === 'ArrowRight') !== rtl ? 1 : -1);
+        j = (j + list.length) % list.length;
+        e.preventDefault();
+        this.setState({ tab: list[j].dataset.tab }, () => { const b = document.querySelector(`[data-tab="${list[j].dataset.tab}"]`); b && b.focus(); });
+      }
+    };
+    if (!s.data) return { ...base, cells: [], tabs: [], activeTab: 'next', isDayTab: false, isNextTab: true, isAgendaTab: false, isNoFixedTab: false, dayRows: [], nextRows: [], weeks: [], noFixedRows: [], hasSelected: false };
+
+    const { opps, dated, noFixed, byDay } = this.build();
+
+    const first = new Date(Date.UTC(s.y, s.m, 1)).getUTCDay();
+    const daysIn = new Date(Date.UTC(s.y, s.m + 1, 0)).getUTCDate();
+    const cells = [];
+    for (let i = 0; i < first; i++) cells.push({ isBlank: true, isDay: false });
+    for (let d = 1; d <= daysIn; d++) {
+      const iso = `${s.y}-${pad(s.m + 1)}-${pad(d)}`;
+      const n = (byDay[iso] || []).length;
+      const isToday = iso === TODAY_ISO, isSel = iso === s.selDay, past = iso < TODAY_ISO, hov = s.hoverIso === iso;
+      const parts = [`${d} ${MONTHS[s.m]}`];
+      if (isToday) parts.push('today');
+      parts.push(n === 0 ? 'no deadlines' : n === 1 ? '1 deadline' : `${n} deadlines`);
+      cells.push({
+        isBlank: false, isDay: true, num: d, count: n, hasDots: n > 0, hasCount: n > 1,
+        aria: parts.join(', '), pressed: isSel,
+        bg: isSel ? '#2b2523' : isToday ? '#f8ecdc' : hov ? '#faf7f4' : 'transparent',
+        ring: isToday && !isSel ? 'inset 0 0 0 1px #2b2523' : 'none',
+        color: isSel ? '#ffffff' : past ? '#5e5653' : '#2b2523',
+        dotColor: isSel ? '#f8ecdc' : '#d95d51',
+        countColor: isSel ? '#f8ecdc' : '#5e5653',
+        select: () => this.setState({ selDay: iso, tab: 'day' }),
+        enter: () => this.setState({ hoverIso: iso }),
+        leave: () => this.setState(st => st.hoverIso === iso ? { hoverIso: null } : null)
+      });
+    }
+    while (cells.length % 7) cells.push({ isBlank: true, isDay: false });
+
+    const showDayTab = !agenda && !!s.selDay;
+    let tab = s.tab;
+    if (tab === 'day' && !showDayTab) tab = 'next';
+    const dayList = s.selDay ? (byDay[s.selDay] || []) : [];
+    const tabDefs = [
+      ...(showDayTab ? [['day', this.dayLabel(s.selDay, dayList.length)]] : []),
+      ['next', agenda ? 'Upcoming' : 'Next 5 deadlines'],
+      ['nofixed', 'No fixed deadline']
+    ];
+    const tabs = tabDefs.map(([key, label]) => {
+      const active = key === tab;
+      return {
+        key, label, active, tabIndex: active ? 0 : -1,
+        color: active ? '#2b2523' : '#5e5653', underline: active ? '#a93d35' : 'transparent', weight: active ? 600 : 500,
+        select: () => this.setState({ tab: key })
+      };
+    });
+
+    const weekStart = (iso) => { const t = tOf(iso); return t - new Date(t).getUTCDay() * 864e5; };
+    const thisWeek = weekStart(TODAY_ISO);
+    const groups = [];
+    dated.forEach(o => {
+      const ws = weekStart(o.iso);
+      let g = groups[groups.length - 1];
+      if (!g || g.ws !== ws) { g = { ws, rows: [] }; groups.push(g); }
+      g.rows.push(o);
+    });
+    const fmt = (t) => { const d = new Date(t); return { d: d.getUTCDate(), m: MO[d.getUTCMonth()] }; };
+    const weeks = groups.map(g => {
+      const off = Math.round((g.ws - thisWeek) / (7 * 864e5));
+      const a = fmt(g.ws), b = fmt(g.ws + 6 * 864e5);
+      const range = a.m === b.m ? `${a.d}–${b.d} ${a.m}` : `${a.d} ${a.m} – ${b.d} ${b.m}`;
+      return { title: off === 0 ? 'This week' : off === 1 ? 'Next week' : `Week of ${a.d} ${a.m}`, range, rows: g.rows };
+    });
+
+    const selected = opps.find(o => o.id === s.selectedId) || null;
+    const selD = s.selDay ? new Date(tOf(s.selDay)) : null;
+    return {
+      ...base, cells, tabs, activeTab: tab,
+      isDayTab: tab === 'day', isNextTab: tab === 'next' && !agenda, isAgendaTab: tab === 'next' && agenda, isNoFixedTab: tab === 'nofixed',
+      dayRows: dayList, dayEmpty: dayList.length === 0,
+      dayEmptyText: selD ? (s.selDay < TODAY_ISO ? `${selD.getUTCDate()} ${MONTHS[selD.getUTCMonth()]} has passed. Past deadlines are hidden.` : `No deadlines on ${selD.getUTCDate()} ${MONTHS[selD.getUTCMonth()]}.`) : '',
+      nextRows: dated.slice(0, 5), weeks, noFixedRows: noFixed,
+      selected, hasSelected: !!selected
+    };
+  }
+}
+</script>
+</body>
+</html>

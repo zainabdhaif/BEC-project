@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>About — Bahrain Early Careers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&family=Poppins:wght@600&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;background:#ffffff;color:#2b2523;font-family:"IBM Plex Sans","IBM Plex Sans Arabic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#a93d35;text-underline-offset:3px}
+a:hover{color:#8e322c}
+:focus-visible{outline:2px solid #a93d35;outline-offset:2px}
+</style>
+</helmet>
+<dc-import name="SiteHeader" current="about" hint-size="100%,80px"></dc-import>
+
+<main style="max-width:1264px;margin:0 auto;padding:64px {{ gutter }} 0">
+  <img src="assets/bec-logo.svg" alt="" width="160" height="160" style="display:block;width:160px;height:160px">
+  <h1 style="margin:32px 0 0;max-width:720px;font:600 {{ h1Font }} Poppins,'IBM Plex Sans Arabic',system-ui,sans-serif;letter-spacing:-0.01em;color:#2b2523;text-wrap:pretty">What is Bahrain Early Careers?</h1>
+  <p style="margin:16px 0 0;max-width:720px;font:400 16px/26px 'IBM Plex Sans',system-ui,sans-serif;color:#2b2523;text-wrap:pretty">One place to find internships, graduate programmes and entry-level jobs in Bahrain, with every deadline visible at a glance.</p>
+
+  <section aria-labelledby="about-who" style="margin-top:{{ sectionGap }}">
+    <h2 id="about-who" style="margin:0;font:600 {{ h2Font }} Poppins,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#2b2523">Who it’s for</h2>
+    <p style="margin:16px 0 0;max-width:720px;font:400 16px/26px 'IBM Plex Sans',system-ui,sans-serif;color:#2b2523;text-wrap:pretty">University students and recent graduates in Bahrain.</p>
+  </section>
+
+  <section aria-labelledby="about-how" style="margin-top:{{ sectionGap }}">
+    <h2 id="about-how" style="margin:0;font:600 {{ h2Font }} Poppins,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#2b2523">How listings work</h2>
+    <p style="margin:16px 0 0;max-width:720px;font:400 16px/26px 'IBM Plex Sans',system-ui,sans-serif;color:#2b2523;text-wrap:pretty">Opportunities are collected from employers’ official channels and checked regularly. BEC is not the employer; you always apply on the employer’s own site.</p>
+  </section>
+
+  <section id="contact" aria-labelledby="about-contact" style="margin-top:{{ sectionGap }}">
+    <h2 id="about-contact" style="margin:0;font:600 {{ h2Font }} Poppins,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#2b2523">Contact</h2>
+    <p style="margin:8px 0 0;max-width:720px;font:400 16px/26px 'IBM Plex Sans',system-ui,sans-serif;color:#2b2523">
+      <a href="mailto:hello@bahrainearlycareers.com" style="min-height:44px;display:inline-flex;align-items:center;color:#a93d35;text-decoration:underline;text-underline-offset:3px;font:400 16px/26px 'IBM Plex Sans',system-ui,sans-serif;overflow-wrap:anywhere">hello@bahrainearlycareers.com</a>
+    </p>
+  </section>
+</main>
+
+<div style="margin-top:{{ footerGap }}">
+  <dc-import name="SiteFooter" hint-size="100%,300px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const bpOf = () => { const w = window.innerWidth; return w < 600 ? 'mobile' : w < 1024 ? 'tablet' : 'desktop'; };
+class Component extends DCLogic {
+  state = { bp: bpOf() };
+  componentDidMount() {
+    this.onResize = () => { const bp = bpOf(); if (bp !== this.state.bp) this.setState({ bp }); };
+    window.addEventListener('resize', this.onResize);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  renderVals() {
+    const bp = this.state.bp, m = bp === 'mobile';
+    return {
+      gutter: bp === 'desktop' ? '32px' : bp === 'tablet' ? '24px' : '16px',
+      h1Font: m ? '28px/36px' : '36px/44px',
+      h2Font: m ? '22px/30px' : '26px/34px',
+      sectionGap: m ? '48px' : '64px',
+      footerGap: m ? '48px' : '64px'
+    };
+  }
+}
+</script>
+</body>
+</html>
