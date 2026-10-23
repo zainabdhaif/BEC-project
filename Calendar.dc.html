@@ -9,131 +9,153 @@
 <x-dc>
 <helmet>
 <title>Deadlines calendar — Bahrain Early Careers</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&family=Poppins:wght@600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Inter:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
 <style>
 *{box-sizing:border-box}
 html,body{overflow-x:hidden}
-body{margin:0;background:#ffffff;color:#2b2523;font-family:"IBM Plex Sans","IBM Plex Sans Arabic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:#a93d35;text-underline-offset:3px}
-a:hover{color:#8e322c}
-:focus-visible{outline:2px solid #a93d35;outline-offset:2px}
+body{margin:0;background:#ffffff;color:#101828;font-family:Inter,"IBM Plex Sans Arabic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#101828;text-underline-offset:3px}
+a:hover{color:#101828;text-decoration-thickness:2px}
+:focus-visible{outline:2px solid #101828;outline-offset:2px}
 </style>
 </helmet>
-<dc-import name="SiteHeader" current="calendar" hint-size="100%,80px"></dc-import>
+<header style="background:#f9fafb;border-bottom:1px solid #eaecf0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 {{ gutter }};height:{{ headerH }};display:flex;align-items:center;justify-content:space-between;gap:32px">
+    <a href="Calendar v4.dc.html" style="display:flex;flex:none"><img src="assets/bec-logo-trimmed.svg" alt="Bahrain Early Careers — home" width="64" height="64" style="display:block;width:{{ logoSize }};height:{{ logoSize }}"></a>
+    <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Main">
+        <ul style="list-style:none;margin:0;padding:0;display:flex;gap:32px">
+          <li style="display:flex"><a href="Calendar v4.dc.html" aria-current="page" style="min-height:44px;display:flex;align-items:center;color:#101828;font:500 15px/24px Inter,system-ui,sans-serif;text-decoration:underline;text-decoration-color:#a93d35;text-decoration-thickness:2px;text-underline-offset:8px">Calendar</a></li>
+          <li style="display:flex"><a href="Opportunities v4.dc.html" style="min-height:44px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="color:#101828">Opportunities</a></li>
+          <li style="display:flex"><a href="About v2.dc.html" style="min-height:44px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="color:#101828">About</a></li>
+        </ul>
+      </nav>
+    </sc-if>
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <button ref="{{ menuBtnRef }}" type="button" onClick="{{ openMenu }}" aria-label="Open menu" aria-haspopup="dialog" style="width:44px;height:44px;margin-inline-end:-10px;display:flex;align-items:center;justify-content:center;background:none;border:0;border-radius:8px;cursor:pointer;color:#101828">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    </sc-if>
+  </div>
+</header>
 
-<main style="max-width:1264px;margin:0 auto;padding:64px {{ gutter }} 0">
-  <h1 style="margin:0;font:600 {{ h1Font }} Poppins,'IBM Plex Sans Arabic',system-ui,sans-serif;letter-spacing:-0.01em;color:#2b2523">Deadlines calendar</h1>
-  <p style="margin:8px 0 0;font:400 16px/26px 'IBM Plex Sans',system-ui,sans-serif;color:#5e5653">Application deadlines for internships, graduate programmes and entry-level jobs in Bahrain.</p>
+<main style="max-width:1280px;margin:0 auto;padding:{{ mainTop }} {{ gutter }} 0">
+  <h1 style="margin:0;font:600 {{ h1Font }} Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;letter-spacing:-0.01em;color:#101828">Deadlines</h1>
 
-  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
-    <div role="group" aria-label="Calendar view" style="margin-top:24px;display:flex;gap:8px">
-      <button type="button" aria-pressed="{{ isAgenda }}" onClick="{{ showAgenda }}" style="flex:1;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid {{ agendaBorder }};background:{{ agendaBg }};color:{{ agendaColor }};cursor:pointer;font:600 15px/20px 'IBM Plex Sans',system-ui,sans-serif">Agenda</button>
-      <button type="button" aria-pressed="{{ isMonthView }}" onClick="{{ showMonth }}" style="flex:1;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid {{ monthBorder }};background:{{ monthBg }};color:{{ monthColor }};cursor:pointer;font:600 15px/20px 'IBM Plex Sans',system-ui,sans-serif">Month</button>
-    </div>
-  </sc-if>
-
-  <sc-if value="{{ showGrid }}" hint-placeholder-val="{{ true }}">
-    <section aria-labelledby="bec-month-title" style="margin-top:32px;background:#ffffff;border:1px solid #e7dfd9;border-radius:12px;padding:{{ boxPad }}">
-      <div style="display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:8px">
-        <h3 id="bec-month-title" aria-live="polite" style="margin:0;min-width:0;font:600 {{ h3Font }} Poppins,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#2b2523">{{ monthTitle }}</h3>
-        <div style="flex:none;display:flex;align-items:center;gap:8px">
-          <button type="button" onClick="{{ prevMonth }}" aria-label="Previous month" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#ffffff;border:1px solid #8c8380;border-radius:8px;cursor:pointer;color:#2b2523" style-hover="background:#faf7f4;border-color:#2b2523">
-            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3.5L5.5 8l4.5 4.5"></path></svg>
-          </button>
-          <button type="button" onClick="{{ nextMonth }}" aria-label="Next month" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#ffffff;border:1px solid #8c8380;border-radius:8px;cursor:pointer;color:#2b2523" style-hover="background:#faf7f4;border-color:#2b2523">
-            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5L10.5 8 6 12.5"></path></svg>
-          </button>
-          <button type="button" onClick="{{ goToday }}" style="min-height:44px;padding:0 16px;background:#ffffff;border:1px solid #8c8380;border-radius:8px;cursor:pointer;color:#2b2523;font:600 15px/20px 'IBM Plex Sans',system-ui,sans-serif;padding-inline:{{ todayPad }}" style-hover="background:#faf7f4;border-color:#2b2523">Today</button>
-        </div>
-      </div>
-
-      <div aria-hidden="true" style="margin-top:{{ namesTop }};display:grid;grid-template-columns:repeat(7,minmax(0,1fr));column-gap:{{ cellGap }}">
-        <sc-for list="{{ dayNames }}" as="dn" hint-placeholder-count="7">
-          <span style="padding:8px 0;text-align:{{ nameAlign }};padding-inline-start:{{ namePad }};font:600 12px/16px 'IBM Plex Sans',system-ui,sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:#5e5653">{{ dn }}</span>
-        </sc-for>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:{{ cellGap }}">
-        <sc-for list="{{ cells }}" as="c" hint-placeholder-count="35">
-          <sc-if value="{{ c.isBlank }}" hint-placeholder-val="{{ false }}">
-            <div aria-hidden="true" style="height:{{ cellH }}"></div>
-          </sc-if>
-          <sc-if value="{{ c.isDay }}" hint-placeholder-val="{{ true }}">
-            <button type="button" onClick="{{ c.select }}" onMouseEnter="{{ c.enter }}" onMouseLeave="{{ c.leave }}" aria-label="{{ c.aria }}" aria-pressed="{{ c.pressed }}" style="height:{{ cellH }};min-width:0;display:flex;flex-direction:column;align-items:{{ cellAlign }};justify-content:{{ cellJustify }};gap:4px;padding:{{ cellPad }};border:0;border-radius:8px;background:{{ c.bg }};box-shadow:{{ c.ring }};cursor:pointer;color:{{ c.color }}">
-              <span style="font:500 14px/20px 'IBM Plex Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums">{{ c.num }}</span>
-              <span style="height:16px;display:flex;align-items:center;gap:4px">
-                <sc-if value="{{ c.hasDots }}" hint-placeholder-val="{{ false }}">
-                  <span style="width:6px;height:6px;border-radius:999px;background:{{ c.dotColor }};flex:none"></span>
-                </sc-if>
-                <sc-if value="{{ c.hasCount }}" hint-placeholder-val="{{ false }}">
-                  <span style="font:600 14px/16px 'IBM Plex Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums;color:{{ c.countColor }}">{{ c.count }}</span>
-                </sc-if>
-              </span>
+  <div style="margin-top:32px;display:grid;grid-template-columns:{{ cols }};gap:{{ colGap }};align-items:start">
+    <div style="min-width:0;display:flex;flex-direction:column;gap:16px">
+      <section aria-labelledby="cal-month" style="background:#ffffff;border:1px solid #eaecf0;border-radius:12px;padding:{{ boxPad }}">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+          <h2 id="cal-month" aria-live="polite" style="margin:0;font:600 {{ h2Font }} Barlow,system-ui,sans-serif;color:#101828">{{ monthTitle }}</h2>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button type="button" onClick="{{ prevMonth }}" aria-label="Previous month" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#ffffff;border:1px solid #7d879b;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);cursor:pointer;color:#344054" style-hover="background:#f9fafb">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 5L7.5 10l5 5"></path></svg>
             </button>
-          </sc-if>
+            <button type="button" onClick="{{ nextMonth }}" aria-label="Next month" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#ffffff;border:1px solid #7d879b;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);cursor:pointer;color:#344054" style-hover="background:#f9fafb">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 5l5 5-5 5"></path></svg>
+            </button>
+            <button type="button" onClick="{{ goToday }}" style="height:44px;padding:0 16px;background:#ffffff;border:1px solid #7d879b;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);cursor:pointer;color:#344054;font:500 15px/20px Inter,system-ui,sans-serif" style-hover="background:#f9fafb">Today</button>
+          </div>
+        </div>
+        <div aria-hidden="true" style="margin-top:24px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding-bottom:12px;border-bottom:2px solid #101828">
+          <sc-for list="{{ dayNames }}" as="dn" hint-placeholder-count="7">
+            <span style="text-align:center;font:600 12px/16px Inter,system-ui,sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:{{ dn.color }}">{{ dn.label }}</span>
+          </sc-for>
+        </div>
+        <div role="grid" aria-label="{{ monthTitle }}" style="margin-top:8px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px">
+          <sc-for list="{{ cells }}" as="c" hint-placeholder-count="35">
+            <sc-if value="{{ c.isOut }}" hint-placeholder-val="{{ false }}">
+              <div aria-hidden="true" style="height:{{ cellH }};padding-top:8px;text-align:center;font:500 14px/20px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:#667085">{{ c.num }}</div>
+            </sc-if>
+            <sc-if value="{{ c.isDay }}" hint-placeholder-val="{{ true }}">
+              <button type="button" onClick="{{ c.select }}" aria-label="{{ c.aria }}" aria-pressed="{{ c.pressed }}" style="height:{{ cellH }};min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0 0;background:{{ c.bg }};border:0;border-radius:8px;cursor:pointer;color:{{ c.color }}" style-hover="background:rgba(169,61,53,0.05)">
+                <span style="font:{{ c.weight }} 14px/20px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums">{{ c.num }}</span>
+                <sc-if value="{{ c.hasDl }}" hint-placeholder-val="{{ false }}">
+                  <span style="display:flex;align-items:center;gap:3px;font:500 12px/16px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:#475467"><span style="width:6px;height:6px;border-radius:999px;background:#667085"></span>{{ c.countText }}</span>
+                </sc-if>
+              </button>
+            </sc-if>
+          </sc-for>
+        </div>
+        <p style="margin:16px 0 0;display:flex;align-items:center;gap:8px;font:400 14px/22px Inter,system-ui,sans-serif;color:#475467"><span aria-hidden="true" style="width:6px;height:6px;border-radius:999px;background:#667085;flex:none"></span>Dots mark application deadlines.</p>
+      </section>
+      <sc-if value="{{ hasNoFixed }}" hint-placeholder-val="{{ true }}">
+        <p style="margin:0;font:400 14px/22px Inter,system-ui,sans-serif;color:#475467">{{ noFixedText }} <a href="Opportunities v4.dc.html" style="color:#a93d35;font-weight:500;text-decoration:none" style-hover="color:#a93d35;text-decoration:none">View all opportunities</a></p>
+      </sc-if>
+    </div>
+
+    <section aria-labelledby="day-heading" style="min-width:0">
+      <div style="height:{{ dayHeadH }};display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:12px;border-bottom:2px solid #101828">
+        <div style="display:flex;align-items:center;gap:12px">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#475467" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;flex:none"><path d="M16 14v2.2l1.6 1"></path><path d="M16 2v3"></path><path d="M21 7.338V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2.338"></path><path d="M3 9h5.859"></path><path d="M8 2v3"></path><circle cx="16" cy="16" r="6"></circle></svg>
+          <h2 id="day-heading" aria-live="polite" style="margin:0;font:600 {{ h2Font }} Barlow,system-ui,sans-serif;color:#101828">{{ dayHeading }}</h2>
+        </div>
+      </div>
+      <div>
+        <sc-if value="{{ dayEmpty }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0;padding:16px 0;font:400 14px/22px Inter,system-ui,sans-serif;color:#475467">No deadlines for this day</p>
+        </sc-if>
+        <sc-for list="{{ items }}" as="o" hint-placeholder-count="3">
+          <article onClick="{{ o.open }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:{{ rowGap }};padding:{{ rowPad }} {{ rowPadX }};margin:0 -{{ rowPadX }};border-bottom:1px solid #eaecf0;background:#ffffff;cursor:pointer" style-hover="background:#f9fafb">
+            <div style="min-width:0;display:flex;flex-direction:column;gap:4px;align-self:center">
+              <h3 style="margin:0;display:flex"><button type="button" data-row-trigger="1" style="background:none;border:0;padding:0;margin:0;text-align:start;cursor:pointer;color:#101828;font:600 18px/26px Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ o.title }}</button></h3>
+              <p style="margin:0;font:400 16px/24px Inter,system-ui,sans-serif;color:#475467">{{ o.company }}</p>
+            </div>
+            <div style="display:flex;align-items:center">
+              <a href="{{ o.link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ o.applyLabel }}" onClick="{{ stop }}" style="height:44px;display:inline-flex;align-items:center;padding:0 16px;background:#101828;color:#ffffff;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);text-decoration:none;font:500 15px/20px Inter,system-ui,sans-serif;white-space:nowrap" style-hover="background:#344054;color:#ffffff">Apply</a>
+            </div>
+          </article>
         </sc-for>
       </div>
-      <p style="margin:16px 0 0;display:flex;align-items:center;gap:8px;font:400 14px/22px 'IBM Plex Sans',system-ui,sans-serif;color:#5e5653">
-        <span aria-hidden="true" style="width:6px;height:6px;border-radius:999px;background:#d95d51;flex:none"></span>
-        Dots mark application deadlines.
-      </p>
     </section>
-  </sc-if>
-
-  <section aria-label="Deadline lists" style="margin-top:{{ tabsTop }}">
-    <div role="tablist" aria-label="Deadline lists" style="display:flex;flex-wrap:wrap;column-gap:{{ tabGap }};row-gap:0;border-bottom:1px solid #e7dfd9">
-      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2">
-        <button type="button" role="tab" id="bec-tab-{{ t.key }}" aria-selected="{{ t.active }}" aria-controls="bec-tabpanel" tabIndex="{{ t.tabIndex }}" onClick="{{ t.select }}" onKeyDown="{{ tabKey }}" data-tab="{{ t.key }}" style="flex:none;min-height:48px;display:flex;align-items:center;padding:0;margin-bottom:-1px;background:none;border:0;border-bottom:2px solid {{ t.underline }};cursor:pointer;color:{{ t.color }};white-space:nowrap;font:{{ t.weight }} 15px/24px 'IBM Plex Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums" style-hover="color:#2b2523">{{ t.label }}</button>
-      </sc-for>
-    </div>
-
-    <div id="bec-tabpanel" role="tabpanel" aria-labelledby="bec-tab-{{ activeTab }}">
-      <sc-if value="{{ isDayTab }}" hint-placeholder-val="{{ false }}">
-        <sc-for list="{{ dayRows }}" as="item" hint-placeholder-count="3">
-          <dc-import name="OpportunityRow" opp="{{ item }}" on-open="{{ openOpp }}" hint-size="100%,131px"></dc-import>
-        </sc-for>
-        <sc-if value="{{ dayEmpty }}" hint-placeholder-val="{{ false }}">
-          <p style="margin:0;padding:24px 0;border-bottom:1px solid #e7dfd9;font:400 16px/26px 'IBM Plex Sans',system-ui,sans-serif;color:#5e5653">{{ dayEmptyText }}</p>
-        </sc-if>
-      </sc-if>
-
-      <sc-if value="{{ isNextTab }}" hint-placeholder-val="{{ true }}">
-        <sc-for list="{{ nextRows }}" as="item" hint-placeholder-count="5">
-          <dc-import name="OpportunityRow" opp="{{ item }}" on-open="{{ openOpp }}" hint-size="100%,131px"></dc-import>
-        </sc-for>
-        <div style="padding-top:16px">
-          <a href="Opportunities.dc.html?sort=deadline" style="min-height:44px;display:inline-flex;align-items:center;color:#a93d35;text-decoration:underline;text-underline-offset:3px;font:600 15px/20px 'IBM Plex Sans',system-ui,sans-serif">View all by deadline</a>
-        </div>
-      </sc-if>
-
-      <sc-if value="{{ isAgendaTab }}" hint-placeholder-val="{{ false }}">
-        <sc-for list="{{ weeks }}" as="w" hint-placeholder-count="3">
-          <div style="padding-top:24px">
-            <h2 style="margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font:600 20px/28px Poppins,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#2b2523">
-              {{ w.title }}
-              <span style="font:400 14px/22px 'IBM Plex Sans',system-ui,sans-serif;color:#5e5653;font-variant-numeric:tabular-nums">{{ w.range }}</span>
-            </h2>
-            <div style="margin-top:8px;border-top:1px solid #e7dfd9">
-              <sc-for list="{{ w.rows }}" as="item" hint-placeholder-count="2">
-                <dc-import name="OpportunityRow" opp="{{ item }}" on-open="{{ openOpp }}" hint-size="100%,160px"></dc-import>
-              </sc-for>
-            </div>
-          </div>
-        </sc-for>
-      </sc-if>
-
-      <sc-if value="{{ isNoFixedTab }}" hint-placeholder-val="{{ false }}">
-        <sc-for list="{{ noFixedRows }}" as="item" hint-placeholder-count="3">
-          <dc-import name="OpportunityRow" opp="{{ item }}" on-open="{{ openOpp }}" hint-size="100%,131px"></dc-import>
-        </sc-for>
-      </sc-if>
-    </div>
-  </section>
+  </div>
 </main>
 
-<div style="margin-top:64px">
-  <dc-import name="SiteFooter" hint-size="100%,300px"></dc-import>
-</div>
+<footer style="margin-top:{{ footTop }};background:#f9fafb;border-top:1px solid #eaecf0">
+  <div style="max-width:1280px;margin:0 auto;padding:48px {{ gutter }} 32px;display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:48px 96px">
+      <img src="assets/bec-logo-trimmed.svg" alt="Bahrain Early Careers" width="96" height="96" style="display:block;width:96px;height:96px;flex:none">
+      <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:32px 64px">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h2 style="margin:0;font:600 12px/16px Inter,system-ui,sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:#475467">Find</h2>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+            <li><a href="Calendar v4.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">Calendar</a></li>
+            <li><a href="Opportunities v4.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">Opportunities</a></li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h2 style="margin:0;font:600 12px/16px Inter,system-ui,sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:#475467">About</h2>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+            <li><a href="About v2.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">About us</a></li>
+            <li><a href="FAQ.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">FAQ</a></li>
+            <li><a href="mailto:hello@bahrainearlycareers.com" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <p style="margin:0;font:400 14px/22px Inter,system-ui,sans-serif;color:#475467">© 2026 Bahrain Early Careers</p>
+  </div>
+</footer>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div ref="{{ menuRef }}" role="dialog" aria-modal="true" aria-label="Menu" style="position:fixed;inset:0;z-index:60;background:#ffffff;display:flex;flex-direction:column;box-shadow:0 20px 24px -4px rgba(16,24,40,0.08),0 8px 8px -4px rgba(16,24,40,0.03)">
+    <div style="flex:none;height:64px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eaecf0">
+      <img src="assets/bec-logo-trimmed.svg" alt="Bahrain Early Careers" width="48" height="48" style="display:block;width:48px;height:48px">
+      <button ref="{{ menuCloseRef }}" type="button" onClick="{{ closeMenu }}" aria-label="Close menu" style="width:44px;height:44px;margin-inline-end:-10px;display:flex;align-items:center;justify-content:center;background:none;border:0;border-radius:8px;cursor:pointer;color:#101828">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </div>
+    <nav aria-label="Main">
+      <ul style="list-style:none;margin:0;padding:8px 16px;display:flex;flex-direction:column">
+        <li style="border-bottom:1px solid #eaecf0"><a href="Calendar v4.dc.html" aria-current="page" style="min-height:56px;display:flex;align-items:center;color:#101828;font:500 18px/28px Inter,system-ui,sans-serif;text-decoration:underline;text-decoration-color:#a93d35;text-decoration-thickness:2px;text-underline-offset:8px">Calendar</a></li>
+        <li style="border-bottom:1px solid #eaecf0"><a href="Opportunities v4.dc.html" style="min-height:56px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 18px/28px Inter,system-ui,sans-serif">Opportunities</a></li>
+        <li style="border-bottom:1px solid #eaecf0"><a href="About v2.dc.html" style="min-height:56px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 18px/28px Inter,system-ui,sans-serif">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</sc-if>
 
 <sc-if value="{{ hasSelected }}" hint-placeholder-val="{{ false }}">
   <dc-import name="DetailPanel" opp="{{ selected }}" on-close="{{ closePanel }}" hint-size="0px,0px"></dc-import>
@@ -142,57 +164,83 @@ a:hover{color:#8e322c}
 <script type="text/x-dc" data-dc-script>
 const TODAY = Date.UTC(2026, 9, 11);
 const TODAY_ISO = '2026-10-11';
+const ACCENT = '#a93d35';
 const TYPE = { internship: 'Internship', full_time: 'Full-time', gtp: 'Graduate programme' };
 const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const STATUS = {
-  urgent: { fg: '#a93d35', bg: '#fbeae6' },
-  soon: { fg: '#8a5300', bg: '#fdf1dc' },
-  open: { fg: '#2f6b4f', bg: '#e8f3ec' }
-};
+const STATUS = { urgent: { fg: '#a93d35', bg: '#ffffff' }, soon: { fg: '#475467', bg: '#ffffff' }, open: { fg: '#475467', bg: '#ffffff' } };
+const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select,[tabindex]:not([tabindex="-1"])';
 const bpOf = () => { const w = window.innerWidth; return w < 600 ? 'mobile' : w < 1024 ? 'tablet' : 'desktop'; };
 const pad = (n) => String(n).padStart(2, '0');
-const isoOf = (t) => { const d = new Date(t); return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`; };
 const tOf = (iso) => { const [y, m, d] = iso.split('-').map(Number); return Date.UTC(y, m - 1, d); };
 const dayDiff = (iso) => Math.round((tOf(iso) - TODAY) / 864e5);
 
 function deadlineInfo(iso) {
-  if (!iso) return { hasDate: false, noDate: true, label: 'DEADLINE', labelColor: '#5e5653', hasRel: false };
+  if (!iso) return { hasDate: false, noDate: true, label: 'DEADLINE', labelColor: '#475467', hasRel: false };
   const [y, m, d] = iso.split('-').map(Number);
   const days = dayDiff(iso);
   const wd = WD[new Date(tOf(iso)).getUTCDay()];
   const status = days <= 7 ? 'urgent' : days <= 14 ? 'soon' : 'open';
   const relWord = days === 0 ? 'TODAY' : days === 1 ? 'TOMORROW' : '';
-  const statusText = status === 'open' ? 'Open'
-    : days === 0 ? 'Closes today' : days === 1 ? 'Closes tomorrow' : `Closes in ${days} days`;
+  const statusText = status === 'open' ? 'Open' : days === 0 ? 'Closes today' : days === 1 ? 'Closes tomorrow' : `Closes in ${days} days`;
   return {
     hasDate: true, noDate: false, days, dateText: `${wd} ${d} ${MO[m - 1]} ${y}`,
-    label: relWord || 'DEADLINE', labelColor: relWord ? '#a93d35' : '#5e5653', hasRel: !!relWord, relWord,
+    label: relWord || 'DEADLINE', labelColor: relWord ? ACCENT : '#475467', hasRel: !!relWord, relWord,
     statusText, ...STATUS[status], isUrgent: status === 'urgent', isSoon: status === 'soon', isOpen: status === 'open'
   };
 }
 const initials = (name) => name.split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join('');
 
 class Component extends DCLogic {
-  state = { data: null, bp: bpOf(), y: 2026, m: 9, selDay: null, tab: 'next', view: 'agenda', hoverIso: null, selectedId: null };
+  state = { data: null, bp: bpOf(), y: 2026, m: 9, selDay: TODAY_ISO, hoverId: null, selectedId: null, menuOpen: false };
+  menuRef = React.createRef(); menuCloseRef = React.createRef(); menuBtnRef = React.createRef();
 
   componentDidMount() {
     const st = new URLSearchParams(location.search).get('state');
     fetch('data/dummy-data.json').then(r => r.json()).then(data => {
       const next = { data };
-      if (st === 'month') next.view = 'month';
-      if (st === 'day') Object.assign(next, { view: 'month', selDay: '2026-10-20', tab: 'day' });
+      if (st === 'day') next.selDay = '2026-10-20';
       if (st === 'panel') next.selectedId = 4;
-      if (st === 'nofixed') next.tab = 'nofixed';
       this.setState(next);
     });
+    this.onKey = (e) => {
+      if (!this.navOpen()) return;
+      if (e.key === 'Escape') { e.preventDefault(); this.closeMenu(); }
+      else if (e.key === 'Tab') this.trap(e, this.menuRef.current);
+    };
     this.onResize = () => { const bp = bpOf(); if (bp !== this.state.bp) this.setState({ bp }); };
+    document.addEventListener('keydown', this.onKey);
     window.addEventListener('resize', this.onResize);
   }
-  componentWillUnmount() { window.removeEventListener('resize', this.onResize); document.body.style.overflow = ''; }
+  componentWillUnmount() { document.removeEventListener('keydown', this.onKey); window.removeEventListener('resize', this.onResize); document.body.style.overflow = ''; }
+  navOpen(s = this.state) { return s.menuOpen && s.bp === 'mobile'; }
   componentDidUpdate(pp, ps) {
-    if (!!ps.selectedId !== !!this.state.selectedId) document.body.style.overflow = this.state.selectedId ? 'hidden' : '';
+    const lock = !!this.state.selectedId || this.navOpen(), was = !!ps.selectedId || this.navOpen(ps);
+    if (lock !== was) document.body.style.overflow = lock ? 'hidden' : '';
+    if (this.navOpen() && !this.navOpen(ps) && this.menuCloseRef.current) this.menuCloseRef.current.focus();
+  }
+  trap(e, root) {
+    if (!root) return;
+    const els = [...root.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null);
+    if (!els.length) return;
+    const first = els[0], last = els[els.length - 1], a = document.activeElement;
+    if (!root.contains(a)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && a === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && a === last) { e.preventDefault(); first.focus(); }
+  }
+  closeMenu() { this.setState({ menuOpen: false }, () => { const b = this.menuBtnRef.current; b && b.focus(); }); }
+
+  renderVals() {
+    const v = this._vals();
+    const bp = this.state.bp, m = bp === 'mobile', d = bp === 'desktop';
+    return { ...v,
+      headerH: m ? '56px' : '64px', logoSize: m ? '40px' : '48px',
+      mainTop: d ? '40px' : m ? '24px' : '32px', boxPad: m ? '12px' : '16px',
+      cellH: d ? '52px' : m ? '44px' : '48px', colGap: d ? '48px' : '32px',
+      dayHeadH: d ? '115px' : 'auto',
+      rowPad: m ? '12px' : '14px', footTop: d ? '64px' : '48px'
+    };
   }
 
   build() {
@@ -205,6 +253,7 @@ class Component extends DCLogic {
         const c = cmap[o.company_id];
         const anyMajor = o.major.includes('Any major');
         const majors = o.major.filter(m => m !== 'Any major');
+        const dl = deadlineInfo(o.deadline_date);
         return {
           id: o.opportunity_id, title: o.title, company: c.name, sector: c.sector, iso: o.deadline_date || null,
           initials: initials(c.name), logoUrl: c.logo_url || '', hasLogo: !!c.logo_url, noLogo: !c.logo_url,
@@ -213,12 +262,13 @@ class Component extends DCLogic {
           majors, anyMajor, majorsText: anyMajor ? 'Any major' : majors.join(', '),
           link: o.opportunity_link, applyLabel: `Apply for ${o.title} at ${c.name} (opens employer site)`,
           requirements: o.requirements, paragraphs: o.description.split(/\n\n+/),
-          deadline: deadlineInfo(o.deadline_date)
+          deadline: dl, dateText: dl.dateText || '', dlLabel: dl.label, dlLabelColor: dl.labelColor,
+          hasStatus: dl.hasDate && dl.isUrgent, statusText: dl.statusText || ''
         };
       });
     const byTitle = (a, b) => a.title.localeCompare(b.title);
     const dated = opps.filter(o => o.iso).sort((a, b) => a.iso.localeCompare(b.iso) || byTitle(a, b));
-    const noFixed = opps.filter(o => !o.iso).sort(byTitle);
+    const noFixed = opps.filter(o => !o.iso);
     const byDay = {};
     dated.forEach(o => { (byDay[o.iso] = byDay[o.iso] || []).push(o); });
     this._for = this.state.data;
@@ -226,125 +276,76 @@ class Component extends DCLogic {
     return this._built;
   }
 
-  dayLabel(iso, n) { const t = tOf(iso), d = new Date(t); return `${WD[d.getUTCDay()]} ${d.getUTCDate()} ${MO[d.getUTCMonth()]} · ${n}`; }
-
-  renderVals() {
-    const s = this.state;
-    const bp = s.bp, mob = bp === 'mobile';
-    const agenda = mob && s.view === 'agenda';
-    const sel = (on) => ({ border: on ? '#2b2523' : '#8c8380', bg: on ? '#2b2523' : '#ffffff', color: on ? '#ffffff' : '#2b2523' });
-    const aS = sel(agenda), mS = sel(mob && !agenda);
+  _vals() {
+    const s = this.state, bp = s.bp, mob = bp === 'mobile', desk = bp === 'desktop';
+    const selD = new Date(tOf(s.selDay));
+    const selCol = selD.getUTCDay();
     const base = {
-      isMobile: mob, isAgenda: agenda, isMonthView: !agenda, showGrid: !agenda,
-      agendaBorder: aS.border, agendaBg: aS.bg, agendaColor: aS.color,
-      monthBorder: mS.border, monthBg: mS.bg, monthColor: mS.color,
-      showAgenda: () => this.setState({ view: 'agenda', tab: s.tab === 'nofixed' ? 'nofixed' : 'next' }),
-      showMonth: () => this.setState({ view: 'month' }),
-      gutter: bp === 'desktop' ? '32px' : bp === 'tablet' ? '24px' : '16px',
-      h1Font: mob ? '28px/36px' : '36px/44px',
-      boxPad: mob ? '16px 8px' : '24px',
-      h3Font: mob ? '18px/26px' : '20px/28px',
-      todayPad: mob ? '12px' : '16px',
-      tabGap: mob ? '16px' : '24px',
-      namesTop: mob ? '12px' : '16px',
-      cellGap: mob ? '0px' : '4px',
-      cellH: bp === 'desktop' ? '80px' : bp === 'tablet' ? '64px' : '48px',
-      cellAlign: mob ? 'center' : 'flex-start',
-      cellJustify: mob ? 'center' : 'space-between',
-      cellPad: mob ? '4px 0' : '8px 12px',
-      nameAlign: mob ? 'center' : 'start', namePad: mob ? '0px' : '12px',
-      tabsTop: mob ? (agenda ? '24px' : '32px') : '32px',
-      dayNames: WD,
+      isMobile: mob, notMobile: !mob,
+      gutter: desk ? '32px' : bp === 'tablet' ? '24px' : '16px',
+      headerH: mob ? '64px' : '80px', logoSize: mob ? '48px' : '64px',
+      mainTop: desk ? '64px' : mob ? '32px' : '48px',
+      h1Font: mob ? '28px/36px' : '36px/44px', h2Font: mob ? '22px/30px' : '26px/34px',
+      cols: desk ? 'minmax(0,7fr) minmax(0,5fr)' : 'minmax(0,1fr)', colGap: desk ? '64px' : '48px',
+      boxPad: mob ? '16px' : '24px',
+      // matches left box: 1 border + 24 pad + 44 month row + 24 gap + 16 weekday + 12 pad + 2 rule
+      dayHeadH: desk ? '123px' : 'auto', cellH: desk ? '64px' : mob ? '52px' : '60px',
+      rowCols: 'minmax(0,1fr) auto',
+      rowGap: mob ? '12px' : '16px', rowPad: mob ? '16px' : '24px', rowPadX: mob ? '12px' : '16px', logoCircle: mob ? '32px' : '40px',
+      footTop: desk ? '96px' : '64px',
+      menuRef: this.menuRef, menuCloseRef: this.menuCloseRef, menuBtnRef: this.menuBtnRef, menuOpen: this.navOpen(),
+      openMenu: () => this.setState({ menuOpen: true }), closeMenu: () => this.closeMenu(),
+      dayNames: WD.map((l, i) => ({ label: l, color: i === selCol ? ACCENT : '#475467' })),
       monthTitle: `${MONTHS[s.m]} ${s.y}`,
+      dayHeading: `${WD[selD.getUTCDay()]} ${selD.getUTCDate()} ${MO[selD.getUTCMonth()]}`,
       prevMonth: () => this.setState(st => st.m === 0 ? { m: 11, y: st.y - 1 } : { m: st.m - 1 }),
       nextMonth: () => this.setState(st => st.m === 11 ? { m: 0, y: st.y + 1 } : { m: st.m + 1 }),
-      goToday: () => this.setState({ y: 2026, m: 9, selDay: TODAY_ISO, tab: 'day' }),
-      openOpp: (id, trigger) => { this.trigger = trigger; this.setState({ selectedId: id }); },
-      closePanel: () => { const t = this.trigger; this.setState({ selectedId: null }, () => { t && t.focus && t.focus(); }); },
-      tabKey: (e) => {
-        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
-        const list = [...e.currentTarget.parentElement.querySelectorAll('[role=tab]')];
-        const i = list.indexOf(e.currentTarget);
-        const rtl = getComputedStyle(e.currentTarget).direction === 'rtl';
-        let j = e.key === 'Home' ? 0 : e.key === 'End' ? list.length - 1 : i + ((e.key === 'ArrowRight') !== rtl ? 1 : -1);
-        j = (j + list.length) % list.length;
-        e.preventDefault();
-        this.setState({ tab: list[j].dataset.tab }, () => { const b = document.querySelector(`[data-tab="${list[j].dataset.tab}"]`); b && b.focus(); });
-      }
+      goToday: () => this.setState({ y: 2026, m: 9, selDay: TODAY_ISO }),
+      stop: (e) => e.stopPropagation(),
+      closePanel: () => { const t = this.trigger; this.setState({ selectedId: null }, () => { t && t.focus && t.focus(); }); }
     };
-    if (!s.data) return { ...base, cells: [], tabs: [], activeTab: 'next', isDayTab: false, isNextTab: true, isAgendaTab: false, isNoFixedTab: false, dayRows: [], nextRows: [], weeks: [], noFixedRows: [], hasSelected: false };
+    if (!s.data) return { ...base, cells: [], items: [], daySub: '', dayEmpty: false, noFixedText: '', hasNoFixed: false, hasSelected: false };
 
     const { opps, dated, noFixed, byDay } = this.build();
-
     const first = new Date(Date.UTC(s.y, s.m, 1)).getUTCDay();
     const daysIn = new Date(Date.UTC(s.y, s.m + 1, 0)).getUTCDate();
+    const prevIn = new Date(Date.UTC(s.y, s.m, 0)).getUTCDate();
     const cells = [];
-    for (let i = 0; i < first; i++) cells.push({ isBlank: true, isDay: false });
+    for (let i = first - 1; i >= 0; i--) cells.push({ isOut: true, isDay: false, isSel: false, num: prevIn - i });
     for (let d = 1; d <= daysIn; d++) {
       const iso = `${s.y}-${pad(s.m + 1)}-${pad(d)}`;
       const n = (byDay[iso] || []).length;
-      const isToday = iso === TODAY_ISO, isSel = iso === s.selDay, past = iso < TODAY_ISO, hov = s.hoverIso === iso;
+      const isToday = iso === TODAY_ISO, isSel = iso === s.selDay, past = iso < TODAY_ISO;
       const parts = [`${d} ${MONTHS[s.m]}`];
       if (isToday) parts.push('today');
       parts.push(n === 0 ? 'no deadlines' : n === 1 ? '1 deadline' : `${n} deadlines`);
       cells.push({
-        isBlank: false, isDay: true, num: d, count: n, hasDots: n > 0, hasCount: n > 1,
-        aria: parts.join(', '), pressed: isSel,
-        bg: isSel ? '#2b2523' : isToday ? '#f8ecdc' : hov ? '#faf7f4' : 'transparent',
-        ring: isToday && !isSel ? 'inset 0 0 0 1px #2b2523' : 'none',
-        color: isSel ? '#ffffff' : past ? '#5e5653' : '#2b2523',
-        dotColor: isSel ? '#f8ecdc' : '#d95d51',
-        countColor: isSel ? '#f8ecdc' : '#5e5653',
-        select: () => this.setState({ selDay: iso, tab: 'day' }),
-        enter: () => this.setState({ hoverIso: iso }),
-        leave: () => this.setState(st => st.hoverIso === iso ? { hoverIso: null } : null)
+        isOut: false, isDay: true, isSel, pressed: isSel, num: d, aria: parts.join(', '),
+        hasDl: n > 0, countText: n > 1 ? String(n) : '',
+        color: isToday ? ACCENT : past ? '#667085' : '#101828', weight: 500,
+        bg: isSel ? 'rgba(169,61,53,0.10)' : 'transparent',
+        select: () => this.setState({ selDay: iso })
       });
     }
-    while (cells.length % 7) cells.push({ isBlank: true, isDay: false });
+    let nd = 1;
+    while (cells.length % 7) cells.push({ isOut: true, isDay: false, isSel: false, num: nd++ });
 
-    const showDayTab = !agenda && !!s.selDay;
-    let tab = s.tab;
-    if (tab === 'day' && !showDayTab) tab = 'next';
-    const dayList = s.selDay ? (byDay[s.selDay] || []) : [];
-    const tabDefs = [
-      ...(showDayTab ? [['day', this.dayLabel(s.selDay, dayList.length)]] : []),
-      ['next', agenda ? 'Upcoming' : 'Next 5 deadlines'],
-      ['nofixed', 'No fixed deadline']
-    ];
-    const tabs = tabDefs.map(([key, label]) => {
-      const active = key === tab;
+    const dayList = byDay[s.selDay] || [];
+    const empty = dayList.length === 0;
+    const src = dayList;
+    const items = src.map(o => {
       return {
-        key, label, active, tabIndex: active ? 0 : -1,
-        color: active ? '#2b2523' : '#5e5653', underline: active ? '#a93d35' : 'transparent', weight: active ? 600 : 500,
-        select: () => this.setState({ tab: key })
+        ...o,
+        open: (e) => { if (e.target.closest('a')) return; this.trigger = e.currentTarget.querySelector('[data-row-trigger]'); this.setState({ selectedId: o.id }); }
       };
     });
-
-    const weekStart = (iso) => { const t = tOf(iso); return t - new Date(t).getUTCDay() * 864e5; };
-    const thisWeek = weekStart(TODAY_ISO);
-    const groups = [];
-    dated.forEach(o => {
-      const ws = weekStart(o.iso);
-      let g = groups[groups.length - 1];
-      if (!g || g.ws !== ws) { g = { ws, rows: [] }; groups.push(g); }
-      g.rows.push(o);
-    });
-    const fmt = (t) => { const d = new Date(t); return { d: d.getUTCDate(), m: MO[d.getUTCMonth()] }; };
-    const weeks = groups.map(g => {
-      const off = Math.round((g.ws - thisWeek) / (7 * 864e5));
-      const a = fmt(g.ws), b = fmt(g.ws + 6 * 864e5);
-      const range = a.m === b.m ? `${a.d}–${b.d} ${a.m}` : `${a.d} ${a.m} – ${b.d} ${b.m}`;
-      return { title: off === 0 ? 'This week' : off === 1 ? 'Next week' : `Week of ${a.d} ${a.m}`, range, rows: g.rows };
-    });
-
+    const daySub = !empty ? (dayList.length === 1 ? '1 deadline' : `${dayList.length} deadlines`)
+      : 'No deadlines on this day';
     const selected = opps.find(o => o.id === s.selectedId) || null;
-    const selD = s.selDay ? new Date(tOf(s.selDay)) : null;
     return {
-      ...base, cells, tabs, activeTab: tab,
-      isDayTab: tab === 'day', isNextTab: tab === 'next' && !agenda, isAgendaTab: tab === 'next' && agenda, isNoFixedTab: tab === 'nofixed',
-      dayRows: dayList, dayEmpty: dayList.length === 0,
-      dayEmptyText: selD ? (s.selDay < TODAY_ISO ? `${selD.getUTCDate()} ${MONTHS[selD.getUTCMonth()]} has passed. Past deadlines are hidden.` : `No deadlines on ${selD.getUTCDate()} ${MONTHS[selD.getUTCMonth()]}.`) : '',
-      nextRows: dated.slice(0, 5), weeks, noFixedRows: noFixed,
+      ...base, cells, items, daySub, dayEmpty: empty,
+      hasNoFixed: noFixed.length > 0,
+      noFixedText: `${noFixed.length} ${noFixed.length === 1 ? 'opportunity has' : 'opportunities have'} no fixed deadline.`,
       selected, hasSelected: !!selected
     };
   }

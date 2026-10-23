@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>FAQ — Bahrain Early Careers</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Inter:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;background:#ffffff;color:#101828;font-family:Inter,"IBM Plex Sans Arabic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#101828;text-underline-offset:3px}
+a:hover{color:#101828;text-decoration-thickness:2px}
+:focus-visible{outline:2px solid #101828;outline-offset:2px}
+</style>
+</helmet>
+<header style="background:#f9fafb;border-bottom:1px solid #eaecf0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 {{ gutter }};height:{{ headerH }};display:flex;align-items:center;justify-content:space-between;gap:32px">
+    <a href="Calendar v4.dc.html" style="display:flex;flex:none"><img src="assets/bec-logo-trimmed.svg" alt="Bahrain Early Careers — home" width="64" height="64" style="display:block;width:{{ logoSize }};height:{{ logoSize }}"></a>
+    <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Main">
+        <ul style="list-style:none;margin:0;padding:0;display:flex;gap:32px">
+          <li style="display:flex"><a href="Calendar v4.dc.html" style="min-height:44px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="color:#101828">Calendar</a></li>
+          <li style="display:flex"><a href="Opportunities v4.dc.html" style="min-height:44px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="color:#101828">Opportunities</a></li>
+          <li style="display:flex"><a href="About v2.dc.html" style="min-height:44px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="color:#101828">About</a></li>
+        </ul>
+      </nav>
+    </sc-if>
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <button ref="{{ menuBtnRef }}" type="button" onClick="{{ openMenu }}" aria-label="Open menu" aria-haspopup="dialog" style="width:44px;height:44px;margin-inline-end:-10px;display:flex;align-items:center;justify-content:center;background:none;border:0;border-radius:8px;cursor:pointer;color:#101828">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    </sc-if>
+  </div>
+</header>
+
+<main style="max-width:1280px;margin:0 auto;padding:{{ mainTop }} {{ gutter }} 0">
+  <div style="display:grid;grid-template-columns:{{ cols }};gap:{{ colGap }};align-items:start">
+    <div style="max-width:720px;padding-bottom:12px;border-bottom:2px solid #101828">
+      <h1 style="margin:0;font:600 {{ h1Font }} Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;letter-spacing:-0.01em;color:#101828;text-wrap:pretty">Frequently asked questions</h1>
+    </div>
+    <div style="min-width:0;max-width:720px">
+      <div style="padding:0 0 16px;border-bottom:1px solid #eaecf0;display:flex;flex-direction:column;gap:4px">
+        <h2 style="margin:0;font:600 18px/26px Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#101828">Do I apply through BEC?</h2>
+        <p style="margin:0;font:400 16px/24px Inter,system-ui,sans-serif;color:#475467;text-wrap:pretty">No. Every Apply button takes you to the employer’s own application page.</p>
+      </div>
+      <div style="padding:16px 0;border-bottom:1px solid #eaecf0;display:flex;flex-direction:column;gap:4px">
+        <h2 style="margin:0;font:600 18px/26px Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#101828">Is it free?</h2>
+        <p style="margin:0;font:400 16px/24px Inter,system-ui,sans-serif;color:#475467;text-wrap:pretty">Yes, for students, graduates and employers.</p>
+      </div>
+      <div style="padding:16px 0;border-bottom:1px solid #eaecf0;display:flex;flex-direction:column;gap:4px">
+        <h2 style="margin:0;font:600 18px/26px Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#101828">What does “Rolling applications” mean?</h2>
+        <p style="margin:0;font:400 16px/24px Inter,system-ui,sans-serif;color:#475467;text-wrap:pretty">The employer has no fixed closing date and reviews applications as they arrive. Apply early, as these can close without notice.</p>
+      </div>
+      <div style="padding:16px 0;border-bottom:1px solid #eaecf0;display:flex;flex-direction:column;gap:4px">
+        <h2 style="margin:0;font:600 18px/26px Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;color:#101828">I found a listing that’s closed or wrong.</h2>
+        <p style="margin:0;font:400 16px/24px Inter,system-ui,sans-serif;color:#475467;text-wrap:pretty">Email us the listing title and we’ll check it within one working day.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer style="margin-top:{{ footTop }};background:#f9fafb;border-top:1px solid #eaecf0">
+  <div style="max-width:1280px;margin:0 auto;padding:48px {{ gutter }} 32px;display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:48px 96px">
+      <img src="assets/bec-logo-trimmed.svg" alt="Bahrain Early Careers" width="96" height="96" style="display:block;width:96px;height:96px;flex:none">
+      <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:32px 64px">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h2 style="margin:0;font:600 12px/16px Inter,system-ui,sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:#475467">Find</h2>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+            <li><a href="Calendar v4.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">Calendar</a></li>
+            <li><a href="Opportunities v4.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">Opportunities</a></li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h2 style="margin:0;font:600 12px/16px Inter,system-ui,sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:#475467">About</h2>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+            <li><a href="About v2.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">About us</a></li>
+            <li><a href="FAQ.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">FAQ</a></li>
+            <li><a href="mailto:hello@bahrainearlycareers.com" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <p style="margin:0;font:400 14px/22px Inter,system-ui,sans-serif;color:#475467">© 2026 Bahrain Early Careers</p>
+  </div>
+</footer>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div ref="{{ menuRef }}" role="dialog" aria-modal="true" aria-label="Menu" style="position:fixed;inset:0;z-index:60;background:#ffffff;display:flex;flex-direction:column;box-shadow:0 20px 24px -4px rgba(16,24,40,0.08),0 8px 8px -4px rgba(16,24,40,0.03)">
+    <div style="flex:none;height:64px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eaecf0">
+      <img src="assets/bec-logo-trimmed.svg" alt="Bahrain Early Careers" width="48" height="48" style="display:block;width:48px;height:48px">
+      <button ref="{{ menuCloseRef }}" type="button" onClick="{{ closeMenu }}" aria-label="Close menu" style="width:44px;height:44px;margin-inline-end:-10px;display:flex;align-items:center;justify-content:center;background:none;border:0;border-radius:8px;cursor:pointer;color:#101828">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </div>
+    <nav aria-label="Main">
+      <ul style="list-style:none;margin:0;padding:8px 16px;display:flex;flex-direction:column">
+        <li style="border-bottom:1px solid #eaecf0"><a href="Calendar v4.dc.html" style="min-height:56px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 18px/28px Inter,system-ui,sans-serif">Calendar</a></li>
+        <li style="border-bottom:1px solid #eaecf0"><a href="Opportunities v4.dc.html" style="min-height:56px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 18px/28px Inter,system-ui,sans-serif">Opportunities</a></li>
+        <li style="border-bottom:1px solid #eaecf0"><a href="About v2.dc.html" style="min-height:56px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 18px/28px Inter,system-ui,sans-serif">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</sc-if>
+
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select,[tabindex]:not([tabindex="-1"])';
+const bpOf = () => { const w = window.innerWidth; return w < 600 ? 'mobile' : w < 1024 ? 'tablet' : 'desktop'; };
+class Component extends DCLogic {
+  state = { bp: bpOf(), menuOpen: false };
+  menuRef = React.createRef(); menuCloseRef = React.createRef(); menuBtnRef = React.createRef();
+  componentDidMount() {
+    this.onKey = (e) => {
+      if (!this.navOpen()) return;
+      if (e.key === 'Escape') { e.preventDefault(); this.closeMenu(); }
+      else if (e.key === 'Tab') this.trap(e, this.menuRef.current);
+    };
+    this.onResize = () => { const bp = bpOf(); if (bp !== this.state.bp) this.setState({ bp }); };
+    document.addEventListener('keydown', this.onKey);
+    window.addEventListener('resize', this.onResize);
+  }
+  componentWillUnmount() { document.removeEventListener('keydown', this.onKey); window.removeEventListener('resize', this.onResize); document.body.style.overflow = ''; }
+  navOpen(s = this.state) { return s.menuOpen && s.bp === 'mobile'; }
+  componentDidUpdate(pp, ps) {
+    if (this.navOpen() !== this.navOpen(ps)) document.body.style.overflow = this.navOpen() ? 'hidden' : '';
+    if (this.navOpen() && !this.navOpen(ps) && this.menuCloseRef.current) this.menuCloseRef.current.focus();
+  }
+  trap(e, root) {
+    if (!root) return;
+    const els = [...root.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null);
+    if (!els.length) return;
+    const first = els[0], last = els[els.length - 1], a = document.activeElement;
+    if (!root.contains(a)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && a === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && a === last) { e.preventDefault(); first.focus(); }
+  }
+  closeMenu() { this.setState({ menuOpen: false }, () => { const b = this.menuBtnRef.current; b && b.focus(); }); }
+  renderVals() {
+    const bp = this.state.bp, m = bp === 'mobile', d = bp === 'desktop';
+    return {
+      isMobile: m, notMobile: !m,
+      gutter: d ? '32px' : bp === 'tablet' ? '24px' : '16px',
+      headerH: m ? '56px' : '64px', logoSize: m ? '40px' : '48px',
+      mainTop: d ? '40px' : m ? '24px' : '32px',
+      h1Font: m ? '28px/36px' : '36px/44px',
+      secGap: m ? '28px' : '40px', footTop: d ? '64px' : '48px',
+      cols: 'minmax(0,1fr)', colGap: '24px',
+      menuRef: this.menuRef, menuCloseRef: this.menuCloseRef, menuBtnRef: this.menuBtnRef, menuOpen: this.navOpen(),
+      openMenu: () => this.setState({ menuOpen: true }), closeMenu: () => this.closeMenu()
+    };
+  }
+}
+</script>
+</body>
+</html>
