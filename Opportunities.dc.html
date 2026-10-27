@@ -351,17 +351,6 @@ class Component extends DCLogic {
   closeFilters() { this.setState({ filtersOpen: false, majorQuery: '' }, () => { const b = this.filtersBtnRef.current; b && b.focus(); }); }
   closeMenu() { this.setState({ menuOpen: false }, () => { const b = this.menuBtnRef.current; b && b.focus(); }); }
 
-  renderVals() {
-    const v = this._vals();
-    const bp = this.state.bp, m = bp === 'mobile', d = bp === 'desktop';
-    return { ...v,
-      headerH: m ? '56px' : '64px', logoSize: m ? '40px' : '48px',
-      mainTop: d ? '40px' : m ? '24px' : '32px', panelPad: m ? '12px' : '16px',
-      listTop: m ? '20px' : '28px', secGap: m ? '28px' : '40px',
-      rowPad: m ? '12px' : '14px', footTop: d ? '64px' : '48px'
-    };
-  }
-
   build() {
     if (this._for === this.state.data) return this._built;
     const { companies, opportunities } = this.state.data;
@@ -407,21 +396,21 @@ class Component extends DCLogic {
   }
   toggle(k, v) { this.setState(st => ({ [k]: st[k].includes(v) ? st[k].filter(x => x !== v) : [...st[k], v] })); }
 
-  _vals() {
+  renderVals() {
     const s = this.state, bp = s.bp, m = bp === 'mobile', d = bp === 'desktop';
     const activeCount = s.types.length + s.sectors.length + s.majors.length;
     const base = {
       q: s.q, sort: s.sort, isMobile: m, notMobile: !m,
       gutter: d ? '32px' : bp === 'tablet' ? '24px' : '16px',
-      headerH: m ? '64px' : '80px', logoSize: m ? '48px' : '64px',
-      mainTop: d ? '64px' : m ? '32px' : '48px',
+      headerH: m ? '56px' : '64px', logoSize: m ? '40px' : '48px',
+      mainTop: d ? '40px' : m ? '24px' : '32px',
       h1Font: m ? '28px/36px' : '36px/44px', h2Font: m ? '22px/30px' : '26px/34px',
-      panelPad: m ? '16px' : '24px', listTop: m ? '32px' : '48px', secGap: m ? '40px' : '56px',
+      panelPad: m ? '12px' : '16px', listTop: m ? '20px' : '28px', secGap: m ? '28px' : '40px',
       rowCols: m ? 'minmax(0,1fr) auto' : d ? '160px minmax(0,1fr) auto' : '136px minmax(0,1fr) auto',
       rowAreas: m ? '"dl dl" "main act"' : '"dl main act"',
-      rowGap: m ? '12px' : '24px', rowPad: m ? '16px' : '24px', rowPadX: m ? '12px' : '16px', logoCircle: m ? '32px' : '40px',
+      rowGap: m ? '12px' : '24px', rowPad: m ? '12px' : '14px', rowPadX: m ? '12px' : '16px', logoCircle: m ? '32px' : '40px',
       dlAlign: 'center',
-      footTop: d ? '96px' : '64px',
+      footTop: d ? '64px' : '48px',
       activeCount, hasActive: activeCount > 0, showClear: activeCount > 0 || !!s.q.trim(),
       filtersAria: activeCount ? `Filters, ${activeCount} applied` : 'Filters',
       filtersBtnRef: this.filtersBtnRef, sheetRef: this.sheetRef, sheetCloseRef: this.sheetCloseRef,
