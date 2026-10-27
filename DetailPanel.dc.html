@@ -69,9 +69,9 @@ a:hover{color:#101828;text-decoration-thickness:2px}
       <div style="padding-bottom:12px;border-bottom:2px solid #101828">
         <h3 id="bec-panel-req" style="margin:0;font:600 15px/20px Inter,system-ui,sans-serif;letter-spacing:0.05em;text-transform:uppercase;color:#475467">Requirements</h3>
       </div>
-      <ul style="list-style:none;margin:0;padding:0">
+      <ul style="list-style:none;margin:0;padding:12px 0 0">
         <sc-for list="{{ opp.requirements }}" as="req" hint-placeholder-count="4">
-          <li style="display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #eaecf0;font:400 16px/26px Inter,system-ui,sans-serif;color:#101828">
+          <li style="display:flex;align-items:flex-start;gap:12px;padding:4px 0;font:400 16px/26px Inter,system-ui,sans-serif;color:#101828">
             <span aria-hidden="true" style="flex:none;width:6px;height:6px;margin-top:10px;border-radius:999px;background:#667085"></span>
             <span>{{ req }}</span>
           </li>
@@ -102,7 +102,7 @@ const PANEL_SAMPLE = {
   applyLabel: 'Apply for Graduate Analyst Programme at Gulf Pearl Bank (opens employer site)',
   requirements: ["Bachelor's degree completed in 2025 or 2026", 'Minimum GPA of 3.0', 'Strong analytical and Excel skills', 'Fluent English; Arabic is a plus'],
   paragraphs: ["Gulf Pearl Bank's Graduate Analyst Programme is an 18-month rotational programme for recent graduates who want to build a career in banking."],
-  iso: '2026-10-11', deadline: { hasRel: true, relWord: 'TODAY', hasDate: true, noDate: false }
+  iso: '2026-10-30', deadline: { hasRel: true, relWord: 'TODAY', hasDate: true, noDate: false }
 };
 const ACCENT = '#a93d35';
 const bpOf = () => { const w = window.innerWidth; return w < 600 ? 'mobile' : w < 1024 ? 'tablet' : 'desktop'; };
