@@ -162,8 +162,8 @@ a:hover{color:#101828;text-decoration-thickness:2px}
 </sc-if>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
-const TODAY = Date.UTC(2026, 9, 11);
-const TODAY_ISO = '2026-10-11';
+const TODAY = Date.UTC(2026, 9, 30);
+const TODAY_ISO = '2026-10-30';
 const ACCENT = '#a93d35';
 const TYPE = { internship: 'Internship', full_time: 'Full-time', gtp: 'Graduate programme' };
 const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -200,7 +200,7 @@ class Component extends DCLogic {
     const st = new URLSearchParams(location.search).get('state');
     fetch('data/dummy-data.json').then(r => r.json()).then(data => {
       const next = { data };
-      if (st === 'day') next.selDay = '2026-10-20';
+      if (st === 'day') { next.selDay = '2026-11-08'; next.m = 10; }
       if (st === 'panel') next.selectedId = 4;
       this.setState(next);
     });
