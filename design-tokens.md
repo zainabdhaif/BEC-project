@@ -37,7 +37,6 @@ Base theme: `uploads/bahrain-early-careers-theme-and-color-palette-*.md`. Where 
 Families
 - **Barlow** — headings and listing titles only. Weight 600.
 - **Inter** — everything else.
-- **IBM Plex Sans Arabic** — fallback for Arabic text.
 
 Weights (one job each)
 | Weight | Role | Examples |

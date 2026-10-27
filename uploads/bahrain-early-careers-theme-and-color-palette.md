@@ -77,11 +77,10 @@ Text and icon, no coloured badges. Listings past their deadline are hidden, so t
 
 ## 3. Typography
 
-All free on Google Fonts. Load only: **Barlow 600; Inter 400, 500, 600; IBM Plex Sans Arabic 400, 600.**
+All free on Google Fonts. Load only: **Barlow 600; Inter 400, 500, 600.**
 
 - **Barlow 600** (`display`): headings and opportunity titles, on every page. Compact and slightly rounded, it echoes the logo's round badge without looking playful.
 - **Inter 400 / 500 / 600** (`sans`): body, navigation, buttons, filters, labels, metadata and **all dates and numbers** (tabular figures).
-- **IBM Plex Sans Arabic 400 / 600** (`arabic`): companion for the future Arabic version (Barlow and Inter have no Arabic). Set one step larger with more line height.
 
 | Style | Font | Size / line height | Weight | Sample | Use |
 | --- | --- | --- | --- | --- | --- |
@@ -96,8 +95,6 @@ All free on Google Fonts. Load only: **Barlow 600; Inter 400, 500, 600; IBM Plex
 | `label` | Inter | 12/16, UPPERCASE, +0.06em | 600 | "REQUIREMENTS" | Eyebrows, fact labels (one or two words only) |
 | `date` | Inter | 15/20, tabular-nums | 600 | "Closes 14 Nov 2026" | Every deadline |
 | `date-day` | Inter | 14/20, tabular-nums | 500 | "1 2 3 14 28" | Calendar day numbers |
-| `ar-heading` | IBM Plex Sans Arabic | 30/44 | 600 | "فرص التدريب في البحرين" | Arabic headings (future) |
-| `ar-body` | IBM Plex Sans Arabic | 17/30 | 400 | "آخر موعد للتقديم ١٤ نوفمبر ٢٠٢٦" | Arabic body (future) |
 
 ### Writing rules
 - Sentence case for headings and buttons ("Apply on employer site", not "APPLY NOW").
@@ -187,9 +184,8 @@ No shadows on rows, the search panel or the calendar.
   --focus-ring: 2px solid var(--ink);
   --focus-offset: 2px;
   /* type */
-  --font-display: Barlow, "IBM Plex Sans Arabic", system-ui, sans-serif;
-  --font-sans: Inter, "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-arabic: "IBM Plex Sans Arabic", Inter, system-ui, sans-serif;
+  --font-display: Barlow, system-ui, sans-serif;
+  --font-sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
   /* spacing */
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
   --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
@@ -207,7 +203,7 @@ No shadows on rows, the search panel or the calendar.
 ```
 
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Inter:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 ```
 
 ---
@@ -317,7 +313,6 @@ File: `BEC-logo-trimmed.svg` (circle on a transparent background). Don't use the
 - **Keyboard:** every link, dropdown, calendar day and button reachable with Tab in reading order; focus ring always visible. Dropdown menus, the mobile filter sheet and the detail panel close with Esc (the sheet and panel also trap focus).
 - **Not colour alone:** urgent deadlines carry an icon, words and the real date; selected filter options have a ticked checkbox; the selected calendar day has an accessible "selected" state; calendar dots have a count and an accessible name.
 - **Motion:** none required; if used, under 200ms and respect "reduce motion".
-- **Arabic later:** build with start / end alignment so layouts mirror for right-to-left.
 
 ---
 
@@ -329,7 +324,7 @@ File: `BEC-logo-trimmed.svg` (circle on a transparent background). Don't use the
 - Coloured status badges (green / amber / coral tags).
 - Showing urgency by colour alone, or relative dates without the real date.
 - Card boxes around opportunity rows, heavy shadows, gradients, coloured side stripes.
-- Different font families on different pages; Barlow for long paragraphs; fonts beyond Barlow, Inter and IBM Plex Sans Arabic.
+- Different font families on different pages; Barlow for long paragraphs; fonts beyond Barlow and Inter.
 - `text-faint` for anything people need to read; `border` (`#eaecf0`) as the only edge of an input.
 - Recolouring, outlining, stretching or cropping the logo; placing it on coral, cream or photos.
 - More than one primary button per view (row Apply buttons excepted); all-caps buttons.

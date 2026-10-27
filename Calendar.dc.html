@@ -11,11 +11,11 @@
 <title>Deadlines calendar — Bahrain Early Careers</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Inter:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Inter:wght@400;500;600&display=swap">
 <style>
 *{box-sizing:border-box}
 html,body{overflow-x:hidden}
-body{margin:0;background:#ffffff;color:#101828;font-family:Inter,"IBM Plex Sans Arabic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;background:#ffffff;color:#101828;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:#101828;text-underline-offset:3px}
 a:hover{color:#101828;text-decoration-thickness:2px}
 :focus-visible{outline:2px solid #101828;outline-offset:2px}
@@ -42,7 +42,7 @@ a:hover{color:#101828;text-decoration-thickness:2px}
 </header>
 
 <main style="max-width:1280px;margin:0 auto;padding:{{ mainTop }} {{ gutter }} 0">
-  <h1 style="margin:0;font:600 {{ h1Font }} Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;letter-spacing:-0.01em;color:#101828">Deadlines</h1>
+  <h1 style="margin:0;font:600 {{ h1Font }} Barlow,system-ui,sans-serif;letter-spacing:-0.01em;color:#101828">Deadlines</h1>
 
   <div style="margin-top:32px;display:grid;grid-template-columns:{{ cols }};gap:{{ colGap }};align-items:start">
     <div style="min-width:0;display:flex;flex-direction:column;gap:16px">
@@ -100,7 +100,7 @@ a:hover{color:#101828;text-decoration-thickness:2px}
         <sc-for list="{{ items }}" as="o" hint-placeholder-count="3">
           <article onClick="{{ o.open }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:{{ rowGap }};padding:{{ rowPad }} {{ rowPadX }};margin:0 -{{ rowPadX }};border-bottom:1px solid #eaecf0;background:#ffffff;cursor:pointer" style-hover="background:#f9fafb">
             <div style="min-width:0;display:flex;flex-direction:column;gap:4px;align-self:center">
-              <h3 style="margin:0;display:flex"><button type="button" data-row-trigger="1" style="background:none;border:0;padding:0;margin:0;text-align:start;cursor:pointer;color:#101828;font:600 18px/26px Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ o.title }}</button></h3>
+              <h3 style="margin:0;display:flex"><button type="button" data-row-trigger="1" style="background:none;border:0;padding:0;margin:0;text-align:start;cursor:pointer;color:#101828;font:600 18px/26px Barlow,system-ui,sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ o.title }}</button></h3>
               <p style="margin:0;font:400 16px/24px Inter,system-ui,sans-serif;color:#475467">{{ o.company }}</p>
             </div>
             <div style="display:flex;align-items:center">
