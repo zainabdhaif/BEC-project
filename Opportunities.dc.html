@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Opportunities — Bahrain Early Careers</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Inter:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;background:#ffffff;color:#101828;font-family:Inter,"IBM Plex Sans Arabic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#101828;text-underline-offset:3px}
+a:hover{color:#101828;text-decoration-thickness:2px}
+:focus-visible{outline:2px solid #101828;outline-offset:2px}
+input::placeholder{color:#667085}
+input[type=search]::-webkit-search-cancel-button{display:none}
+</style>
+</helmet>
+<header style="background:#f9fafb;border-bottom:1px solid #eaecf0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 {{ gutter }};height:{{ headerH }};display:flex;align-items:center;justify-content:space-between;gap:32px">
+    <a href="Calendar.dc.html" style="display:flex;flex:none"><img src="assets/BEC-logo-trimmed.svg" alt="Bahrain Early Careers — home" width="64" height="64" style="display:block;width:{{ logoSize }};height:{{ logoSize }}"></a>
+    <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Main">
+        <ul style="list-style:none;margin:0;padding:0;display:flex;gap:32px">
+          <li style="display:flex"><a href="Calendar.dc.html" style="min-height:44px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="color:#101828">Calendar</a></li>
+          <li style="display:flex"><a href="Opportunities.dc.html" aria-current="page" style="min-height:44px;display:flex;align-items:center;color:#101828;font:500 15px/24px Inter,system-ui,sans-serif;text-decoration:underline;text-decoration-color:#a93d35;text-decoration-thickness:2px;text-underline-offset:8px">Opportunities</a></li>
+          <li style="display:flex"><a href="About.dc.html" style="min-height:44px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="color:#101828">About</a></li>
+        </ul>
+      </nav>
+    </sc-if>
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <button ref="{{ menuBtnRef }}" type="button" onClick="{{ openMenu }}" aria-label="Open menu" aria-haspopup="dialog" style="width:44px;height:44px;margin-inline-end:-10px;display:flex;align-items:center;justify-content:center;background:none;border:0;border-radius:8px;cursor:pointer;color:#101828">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    </sc-if>
+  </div>
+</header>
+
+<main style="max-width:1280px;margin:0 auto;padding:{{ mainTop }} {{ gutter }} 0">
+  <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px">
+    <div style="max-width:720px;display:flex;flex-direction:column;gap:12px">
+      <h1 style="margin:0;font:600 {{ h1Font }} Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;letter-spacing:-0.01em;color:#101828">Opportunities</h1>
+    </div>
+    <label style="position:relative;display:flex;flex:none">
+      <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Sort by</span>
+      <select value="{{ sort }}" onChange="{{ onSort }}" style="appearance:none;-webkit-appearance:none;height:44px;min-width:220px;padding-inline-start:14px;padding-inline-end:40px;background:#ffffff;border:1px solid #7d879b;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);font:500 15px/20px Inter,system-ui,sans-serif;color:#344054;cursor:pointer">
+        <option value="deadline">Soonest deadline</option>
+        <option value="position">Position A–Z</option>
+        <option value="company">Company A–Z</option>
+      </select>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#667085" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position:absolute;inset-inline-end:14px;top:12px;pointer-events:none"><path d="M5 7.5l5 5 5-5"></path></svg>
+    </label>
+  </div>
+
+  <section aria-label="Search and filter" style="margin-top:32px;background:#f9fafb;border-radius:12px;padding:{{ panelPad }};display:flex;flex-direction:column;gap:12px">
+    <div style="position:relative">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#667085" stroke-width="1.67" stroke-linecap="round" aria-hidden="true" style="position:absolute;inset-inline-start:14px;top:12px;pointer-events:none"><circle cx="8.5" cy="8.5" r="5.75"></circle><path d="M13 13l4 4"></path></svg>
+      <input type="search" value="{{ q }}" onChange="{{ onSearch }}" aria-label="Search opportunities" placeholder="Search by role, employer, major or skill" style="width:100%;height:44px;padding-inline-start:42px;padding-inline-end:14px;background:#ffffff;border:1px solid #7d879b;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);font:400 16px/24px Inter,system-ui,sans-serif;color:#101828;text-overflow:ellipsis">
+    </div>
+    <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
+          <div data-dd="1" style="position:relative">
+            <button type="button" data-dd-btn="{{ f.key }}" onClick="{{ f.toggle }}" aria-expanded="{{ f.isOpen }}" aria-haspopup="true" aria-label="{{ f.aria }}" style="height:44px;display:inline-flex;align-items:center;gap:8px;padding-inline-start:14px;padding-inline-end:12px;background:#ffffff;border:1px solid #7d879b;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);font:500 15px/20px Inter,system-ui,sans-serif;color:#344054;cursor:pointer" style-hover="background:#f9fafb">
+              <span>{{ f.buttonLabel }}</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#667085" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"></path></svg>
+            </button>
+            <sc-if value="{{ f.isOpen }}" hint-placeholder-val="{{ false }}">
+              <div role="group" aria-label="{{ f.name }}" style="position:absolute;top:calc(100% + 8px);inset-inline-start:0;z-index:20;width:300px;background:#ffffff;border:1px solid #eaecf0;border-radius:8px;box-shadow:0 12px 16px -4px rgba(16,24,40,0.08),0 4px 6px -2px rgba(16,24,40,0.03);padding:4px">
+                <sc-if value="{{ f.hasSearch }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:4px 4px 8px;margin-bottom:4px;border-bottom:1px solid #eaecf0">
+                    <input type="search" value="{{ f.searchValue }}" onChange="{{ f.onSearch }}" aria-label="Search majors" placeholder="Search majors" autoFocus="{{ true }}" style="width:100%;height:44px;padding:0 12px;background:#ffffff;border:1px solid #7d879b;border-radius:8px;font:400 16px/24px Inter,system-ui,sans-serif;color:#101828">
+                  </div>
+                </sc-if>
+                <div style="max-height:320px;overflow-y:auto;display:flex;flex-direction:column">
+                  <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3">
+                    <label style="display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:6px;cursor:{{ o.cursor }};color:{{ o.color }};font:500 15px/20px Inter,system-ui,sans-serif" style-hover="background:#f9fafb">
+                      <input type="checkbox" checked="{{ o.checked }}" disabled="{{ o.disabled }}" onChange="{{ o.toggle }}" style="width:16px;height:16px;margin:0;accent-color:#101828;flex:none">
+                      <span style="flex:1">{{ o.label }}</span>
+                    </label>
+                  </sc-for>
+                  <sc-if value="{{ f.noOptions }}" hint-placeholder-val="{{ false }}">
+                    <p style="margin:0;padding:12px;font:400 14px/22px Inter,system-ui,sans-serif;color:#475467">No majors match “{{ f.searchValue }}”</p>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{ showClear }}" hint-placeholder-val="{{ false }}">
+          <button type="button" onClick="{{ clearAll }}" style="margin-inline-start:auto;min-height:44px;padding:0 4px;background:none;border:0;cursor:pointer;color:#101828;text-decoration:underline;text-underline-offset:3px;font:500 15px/20px Inter,system-ui,sans-serif" style-hover="text-decoration-thickness:2px">Clear filters</button>
+        </sc-if>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:8px">
+        <button ref="{{ filtersBtnRef }}" type="button" onClick="{{ openFilters }}" aria-haspopup="dialog" aria-label="{{ filtersAria }}" style="height:44px;display:inline-flex;align-items:center;gap:8px;padding:0 14px;background:#ffffff;border:1px solid #7d879b;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);font:500 15px/20px Inter,system-ui,sans-serif;color:#344054;cursor:pointer">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" aria-hidden="true"><path d="M5 10h10"></path><path d="M2.5 5h15"></path><path d="M7.5 15h5"></path></svg>
+          Filters
+          <sc-if value="{{ hasActive }}" hint-placeholder-val="{{ false }}">
+            <span aria-hidden="true" style="min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:#101828;color:#ffffff;display:inline-flex;align-items:center;justify-content:center;font:500 12px/16px Inter,system-ui,sans-serif">{{ activeCount }}</span>
+          </sc-if>
+        </button>
+        <sc-if value="{{ showClear }}" hint-placeholder-val="{{ false }}">
+          <button type="button" onClick="{{ clearAll }}" style="margin-inline-start:auto;min-height:44px;padding:0 4px;background:none;border:0;cursor:pointer;color:#101828;text-decoration:underline;text-underline-offset:3px;font:500 15px/20px Inter,system-ui,sans-serif">Clear filters</button>
+        </sc-if>
+      </div>
+    </sc-if>
+  </section>
+
+  <sc-if value="{{ hasChips }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="0">
+        <button type="button" onClick="{{ c.remove }}" aria-label="{{ c.aria }}" style="min-height:32px;max-width:100%;display:inline-flex;align-items:center;gap:6px;padding:4px 8px 4px 10px;background:#ffffff;border:1px solid #7d879b;border-radius:6px;font:500 14px/20px Inter,system-ui,sans-serif;color:#344054;cursor:pointer" style-hover="background:#f9fafb">
+          <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.label }}</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#667085" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6"></path></svg>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <div style="margin-top:{{ listTop }}">
+    <sc-if value="{{ hasRolling }}" hint-placeholder-val="{{ true }}">
+      <section aria-labelledby="sec-rolling" style="margin-bottom:{{ secGap }}">
+      <div style="padding-bottom:12px;border-bottom:2px solid #101828">
+        <h2 id="sec-rolling" style="margin:0;font:500 15px/20px Inter,system-ui,sans-serif;letter-spacing:0.05em;text-transform:uppercase;color:#475467">Rolling applications</h2>
+      </div>
+        <sc-for list="{{ rolling }}" as="o" hint-placeholder-count="2">
+          <article onClick="{{ o.open }}" style="position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:&quot;main act&quot;;column-gap:{{ rowGap }};padding:{{ rowPad }} {{ rowPadX }};margin:0 -{{ rowPadX }};border-bottom:1px solid #eaecf0;background:#ffffff;cursor:pointer" style-hover="background:#f9fafb">
+            <div style="grid-area:main;min-width:0;display:flex;flex-direction:column;gap:4px;align-self:center">
+              <h3 style="margin:0;display:flex"><button type="button" data-row-trigger="1" style="background:none;border:0;padding:0;margin:0;text-align:start;cursor:pointer;color:#101828;font:600 18px/26px Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ o.title }}</button></h3>
+              <p style="margin:0;font:400 16px/24px Inter,system-ui,sans-serif;color:#475467">{{ o.company }}</p>
+            </div>
+            <div style="grid-area:act;display:flex;align-items:flex-start;align-self:center">
+              <a href="{{ o.link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ o.applyLabel }}" onClick="{{ stop }}" style="height:44px;display:inline-flex;align-items:center;gap:6px;padding:0 16px;background:#101828;color:#ffffff;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);text-decoration:none;font:500 15px/20px Inter,system-ui,sans-serif;white-space:nowrap" style-hover="background:#344054;color:#ffffff">Apply</a>
+            </div>
+          </article>
+        </sc-for>
+      </section>
+    </sc-if>
+    <sc-if value="{{ hasRows }}" hint-placeholder-val="{{ true }}">
+      <section aria-labelledby="sec-dated">
+      <div style="padding-bottom:12px;border-bottom:2px solid #101828">
+        <h2 id="sec-dated" style="margin:0;font:500 15px/20px Inter,system-ui,sans-serif;letter-spacing:0.05em;text-transform:uppercase;color:#475467">With a closing date</h2>
+      </div>
+        <sc-for list="{{ rows }}" as="o" hint-placeholder-count="4">
+          <article onClick="{{ o.open }}" style="position:relative;display:grid;grid-template-columns:{{ rowCols }};grid-template-areas:{{ rowAreas }};column-gap:{{ rowGap }};row-gap:16px;padding:{{ rowPad }} {{ rowPadX }};margin:0 -{{ rowPadX }};border-bottom:1px solid #eaecf0;background:#ffffff;cursor:pointer" style-hover="background:#f9fafb">
+            <div style="grid-area:main;min-width:0;display:flex;flex-direction:column;gap:4px;align-self:center">
+              <h3 style="margin:0;display:flex"><button type="button" data-row-trigger="1" style="background:none;border:0;padding:0;margin:0;text-align:start;cursor:pointer;color:#101828;font:600 18px/26px Barlow,'IBM Plex Sans Arabic',system-ui,sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ o.title }}</button></h3>
+              <p style="margin:0;font:400 16px/24px Inter,system-ui,sans-serif;color:#475467">{{ o.company }}</p>
+            </div>
+            <div style="grid-area:dl;display:flex;flex-direction:column;gap:2px;align-self:{{ dlAlign }}">
+              <span style="font:600 12px/16px Inter,system-ui,sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:{{ o.dlLabelColor }}">{{ o.dlLabel }}</span>
+              <sc-if value="{{ o.hasDate }}" hint-placeholder-val="{{ true }}">
+                <span style="font:{{ o.dateWeight }} 15px/20px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:{{ o.dateColor }}">{{ o.dateText }}</span>
+              </sc-if>
+              <sc-if value="{{ o.noDate }}" hint-placeholder-val="{{ false }}">
+                <span style="font:500 15px/20px Inter,system-ui,sans-serif;color:#475467">No fixed deadline</span>
+              </sc-if>
+              
+            </div>
+            <div style="grid-area:act;display:flex;align-items:flex-start;align-self:{{ dlAlign }}">
+              <a href="{{ o.link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ o.applyLabel }}" onClick="{{ stop }}" style="height:44px;display:inline-flex;align-items:center;gap:6px;padding:0 16px;background:#101828;color:#ffffff;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);text-decoration:none;font:500 15px/20px Inter,system-ui,sans-serif;white-space:nowrap" style-hover="background:#344054;color:#ffffff">Apply</a>
+            </div>
+          </article>
+        </sc-for>
+      </section>
+    </sc-if>
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid #eaecf0;padding:64px 0;display:flex;flex-direction:column;align-items:flex-start;gap:16px">
+        <h2 style="margin:0;font:600 {{ h2Font }} Barlow,system-ui,sans-serif;color:#101828">No opportunities match your search</h2>
+        <button type="button" onClick="{{ clearAll }}" style="height:44px;padding:0 20px;background:#101828;border:0;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.05);cursor:pointer;color:#ffffff;font:500 15px/20px Inter,system-ui,sans-serif" style-hover="background:#344054">Clear filters</button>
+      </div>
+    </sc-if>
+  </div>
+</main>
+
+<footer style="margin-top:{{ footTop }};background:#f9fafb;border-top:1px solid #eaecf0">
+  <div style="max-width:1280px;margin:0 auto;padding:48px {{ gutter }} 32px;display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:48px 96px">
+      <img src="assets/BEC-logo-trimmed.svg" alt="Bahrain Early Careers" width="96" height="96" style="display:block;width:96px;height:96px;flex:none">
+      <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:32px 64px">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h2 style="margin:0;font:600 12px/16px Inter,system-ui,sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:#475467">Find</h2>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+            <li><a href="Calendar.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">Calendar</a></li>
+            <li><a href="Opportunities.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">Opportunities</a></li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h2 style="margin:0;font:600 12px/16px Inter,system-ui,sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:#475467">About</h2>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+            <li><a href="About.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">About us</a></li>
+            <li><a href="FAQ.dc.html" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">FAQ</a></li>
+            <li><a href="mailto:hello@bahrainearlycareers.com" style="min-height:44px;display:flex;align-items:center;color:#101828;text-decoration:none;font:500 15px/24px Inter,system-ui,sans-serif" style-hover="text-decoration:underline">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <p style="margin:0;font:400 14px/22px Inter,system-ui,sans-serif;color:#475467">© 2026 Bahrain Early Careers</p>
+  </div>
+</footer>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div ref="{{ menuRef }}" role="dialog" aria-modal="true" aria-label="Menu" style="position:fixed;inset:0;z-index:60;background:#ffffff;display:flex;flex-direction:column;box-shadow:0 20px 24px -4px rgba(16,24,40,0.08),0 8px 8px -4px rgba(16,24,40,0.03)">
+    <div style="flex:none;height:64px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eaecf0">
+      <img src="assets/BEC-logo-trimmed.svg" alt="Bahrain Early Careers" width="48" height="48" style="display:block;width:48px;height:48px">
+      <button ref="{{ menuCloseRef }}" type="button" onClick="{{ closeMenu }}" aria-label="Close menu" style="width:44px;height:44px;margin-inline-end:-10px;display:flex;align-items:center;justify-content:center;background:none;border:0;border-radius:8px;cursor:pointer;color:#101828">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </div>
+    <nav aria-label="Main">
+      <ul style="list-style:none;margin:0;padding:8px 16px;display:flex;flex-direction:column">
+        <li style="border-bottom:1px solid #eaecf0"><a href="Calendar.dc.html" style="min-height:56px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 18px/28px Inter,system-ui,sans-serif">Calendar</a></li>
+        <li style="border-bottom:1px solid #eaecf0"><a href="Opportunities.dc.html" aria-current="page" style="min-height:56px;display:flex;align-items:center;color:#101828;font:500 18px/28px Inter,system-ui,sans-serif;text-decoration:underline;text-decoration-color:#a93d35;text-decoration-thickness:2px;text-underline-offset:8px">Opportunities</a></li>
+        <li style="border-bottom:1px solid #eaecf0"><a href="About.dc.html" style="min-height:56px;display:flex;align-items:center;text-decoration:none;color:#475467;font:500 18px/28px Inter,system-ui,sans-serif">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</sc-if>
+
+<sc-if value="{{ showSheet }}" hint-placeholder-val="{{ false }}">
+  <div ref="{{ sheetRef }}" role="dialog" aria-modal="true" aria-labelledby="bec-filters-title" style="position:fixed;inset:0;z-index:50;background:#ffffff;display:flex;flex-direction:column">
+    <div style="flex:none;height:64px;padding:0 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #eaecf0">
+      <h2 id="bec-filters-title" style="margin:0;flex:1;font:600 20px/28px Barlow,system-ui,sans-serif;color:#101828">Filters</h2>
+      <button type="button" onClick="{{ clearFilters }}" style="min-height:44px;padding:0 8px;background:none;border:0;cursor:pointer;color:#101828;text-decoration:underline;text-underline-offset:3px;font:500 15px/20px Inter,system-ui,sans-serif">Clear filters</button>
+      <button ref="{{ sheetCloseRef }}" type="button" onClick="{{ closeFilters }}" aria-label="Close filters" style="width:44px;height:44px;margin-inline-end:-10px;display:flex;align-items:center;justify-content:center;background:none;border:0;border-radius:8px;cursor:pointer;color:#101828">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"></path></svg>
+      </button>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:0 16px">
+      <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
+        <div role="group" aria-labelledby="bec-fs-{{ f.key }}" style="padding:24px 0;border-bottom:1px solid #eaecf0;display:flex;flex-direction:column;gap:8px">
+          <h3 id="bec-fs-{{ f.key }}" style="margin:0;font:600 20px/28px Barlow,system-ui,sans-serif;color:#101828">{{ f.name }}</h3>
+          <sc-if value="{{ f.hasSearch }}" hint-placeholder-val="{{ false }}">
+            <input type="search" value="{{ f.searchValue }}" onChange="{{ f.onSearch }}" aria-label="Search majors" placeholder="Search majors" style="width:100%;height:44px;padding:0 14px;background:#ffffff;border:1px solid #7d879b;border-radius:8px;font:400 16px/24px Inter,system-ui,sans-serif;color:#101828">
+          </sc-if>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3">
+              <label style="display:flex;align-items:center;gap:12px;min-height:44px;cursor:{{ o.cursor }};color:{{ o.color }};font:400 16px/24px Inter,system-ui,sans-serif">
+                <input type="checkbox" checked="{{ o.checked }}" disabled="{{ o.disabled }}" onChange="{{ o.toggle }}" style="width:18px;height:18px;margin:0;accent-color:#101828;flex:none">
+                <span style="flex:1;min-width:0">{{ o.label }}</span>
+              </label>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="flex:none;padding:12px 16px;border-top:1px solid #eaecf0">
+      <button type="button" onClick="{{ closeFilters }}" style="width:100%;height:48px;border:0;border-radius:8px;background:#101828;color:#ffffff;cursor:pointer;font:500 15px/20px Inter,system-ui,sans-serif">{{ showResultsText }}</button>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ hasSelected }}" hint-placeholder-val="{{ false }}">
+  <dc-import name="DetailPanel" opp="{{ selected }}" on-close="{{ closePanel }}" hint-size="0px,0px"></dc-import>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;previewPanel&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Review states&quot;},&quot;previewEmpty&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Review states&quot;}}">
+const TODAY = Date.UTC(2026, 9, 30);
+const ACCENT = '#a93d35';
+const TYPE = { internship: 'Internship', full_time: 'Full-time', gtp: 'Graduate programme' };
+const TYPE_ORDER = ['internship', 'full_time', 'gtp'];
+const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const STATUS = { urgent: { fg: '#a93d35', bg: '#ffffff' }, soon: { fg: '#475467', bg: '#ffffff' }, open: { fg: '#475467', bg: '#ffffff' } };
+const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select,[tabindex]:not([tabindex="-1"])';
+const bpOf = () => { const w = window.innerWidth; return w < 600 ? 'mobile' : w < 1024 ? 'tablet' : 'desktop'; };
+const dayDiff = (iso) => { const [y, m, d] = iso.split('-').map(Number); return Math.round((Date.UTC(y, m - 1, d) - TODAY) / 864e5); };
+
+function deadlineInfo(iso) {
+  if (!iso) return { hasDate: false, noDate: true, label: 'DEADLINE', labelColor: '#475467', hasRel: false };
+  const [y, m, d] = iso.split('-').map(Number);
+  const days = dayDiff(iso);
+  const wd = WD[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+  const status = days <= 7 ? 'urgent' : days <= 14 ? 'soon' : 'open';
+  const relWord = days === 0 ? 'TODAY' : days === 1 ? 'TOMORROW' : '';
+  const statusText = status === 'open' ? 'Open' : days === 0 ? 'Closes today' : days === 1 ? 'Closes tomorrow' : `Closes in ${days} days`;
+  return {
+    hasDate: true, noDate: false, days, dateText: `${wd} ${d} ${MO[m - 1]} ${y}`,
+    label: relWord || 'DEADLINE', labelColor: relWord ? ACCENT : '#475467', hasRel: !!relWord, relWord,
+    statusText, ...STATUS[status], isUrgent: status === 'urgent', isSoon: status === 'soon', isOpen: status === 'open'
+  };
+}
+const initials = (name) => name.split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+
+class Component extends DCLogic {
+  state = { data: null, q: '', types: [], sectors: [], majors: [], sort: 'deadline', openMenu: null, majorQuery: '', selectedId: null, filtersOpen: false, menuOpen: false, hoverId: null, bp: bpOf() };
+  sheetRef = React.createRef(); sheetCloseRef = React.createRef(); filtersBtnRef = React.createRef();
+  menuRef = React.createRef(); menuCloseRef = React.createRef(); menuBtnRef = React.createRef();
+
+  componentDidMount() {
+    const urlState = new URLSearchParams(location.search).get('state');
+    fetch('data/dummy-data.json').then(r => r.json()).then(data => {
+      this.setState({ data, selectedId: (this.props.previewPanel || urlState === 'panel') ? 1 : null, filtersOpen: urlState === 'filters', urlEmpty: urlState === 'empty' });
+    });
+    this.onDown = (e) => { if (this.state.openMenu && !e.target.closest('[data-dd]')) this.setState({ openMenu: null }); };
+    this.onKey = (e) => {
+      if (this.navOpen()) {
+        if (e.key === 'Escape') { e.preventDefault(); this.closeMenu(); }
+        else if (e.key === 'Tab') this.trap(e, this.menuRef.current);
+        return;
+      }
+      if (this.sheetOpen()) {
+        if (e.key === 'Escape') { e.preventDefault(); this.closeFilters(); }
+        else if (e.key === 'Tab') this.trap(e, this.sheetRef.current);
+        return;
+      }
+      if (e.key === 'Escape' && this.state.openMenu && !this.state.selectedId) {
+        const key = this.state.openMenu;
+        this.setState({ openMenu: null }, () => { const b = document.querySelector(`[data-dd-btn="${key}"]`); b && b.focus(); });
+      }
+    };
+    this.onResize = () => { const bp = bpOf(); if (bp !== this.state.bp) this.setState({ bp, openMenu: null }); };
+    document.addEventListener('mousedown', this.onDown);
+    document.addEventListener('keydown', this.onKey);
+    window.addEventListener('resize', this.onResize);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.onDown);
+    document.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('resize', this.onResize);
+    document.body.style.overflow = '';
+  }
+  sheetOpen(s = this.state) { return s.filtersOpen && s.bp === 'mobile'; }
+  navOpen(s = this.state) { return s.menuOpen && s.bp === 'mobile'; }
+  componentDidUpdate(pp, ps) {
+    const lock = !!this.state.selectedId || this.sheetOpen() || this.navOpen();
+    const was = !!ps.selectedId || this.sheetOpen(ps) || this.navOpen(ps);
+    if (lock !== was) document.body.style.overflow = lock ? 'hidden' : '';
+    if (this.sheetOpen() && !this.sheetOpen(ps) && this.sheetCloseRef.current) this.sheetCloseRef.current.focus();
+    if (this.navOpen() && !this.navOpen(ps) && this.menuCloseRef.current) this.menuCloseRef.current.focus();
+    if (pp.previewPanel !== this.props.previewPanel && this.state.data) this.setState({ selectedId: this.props.previewPanel ? 1 : null });
+  }
+  trap(e, root) {
+    if (!root) return;
+    const els = [...root.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null);
+    if (!els.length) return;
+    const first = els[0], last = els[els.length - 1], a = document.activeElement;
+    if (!root.contains(a)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && a === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && a === last) { e.preventDefault(); first.focus(); }
+  }
+  closeFilters() { this.setState({ filtersOpen: false, majorQuery: '' }, () => { const b = this.filtersBtnRef.current; b && b.focus(); }); }
+  closeMenu() { this.setState({ menuOpen: false }, () => { const b = this.menuBtnRef.current; b && b.focus(); }); }
+
+  renderVals() {
+    const v = this._vals();
+    const bp = this.state.bp, m = bp === 'mobile', d = bp === 'desktop';
+    return { ...v,
+      headerH: m ? '56px' : '64px', logoSize: m ? '40px' : '48px',
+      mainTop: d ? '40px' : m ? '24px' : '32px', panelPad: m ? '12px' : '16px',
+      listTop: m ? '20px' : '28px', secGap: m ? '28px' : '40px',
+      rowPad: m ? '12px' : '14px', footTop: d ? '64px' : '48px'
+    };
+  }
+
+  build() {
+    if (this._for === this.state.data) return this._built;
+    const { companies, opportunities } = this.state.data;
+    const cmap = Object.fromEntries(companies.map(c => [c.company_id, c]));
+    const opps = opportunities
+      .filter(o => !o.hidden && (!o.deadline_date || dayDiff(o.deadline_date) >= 0))
+      .map(o => {
+        const c = cmap[o.company_id];
+        const anyMajor = o.major.includes('Any major');
+        const majors = o.major.filter(m => m !== 'Any major');
+        const dl = deadlineInfo(o.deadline_date);
+        return {
+          id: o.opportunity_id, title: o.title, company: c.name, sector: c.sector,
+          initials: initials(c.name), logoUrl: c.logo_url || '', hasLogo: !!c.logo_url, noLogo: !c.logo_url,
+          location: o.location, typeKey: o.type, typeLabel: TYPE[o.type], typeEyebrow: TYPE[o.type].toUpperCase(),
+          meta: `${o.location} · ${TYPE[o.type]}`, companyLine: `${c.name} · ${o.location}`,
+          majors, anyMajor, majorsText: anyMajor ? 'Any major' : majors.join(', '),
+          link: o.opportunity_link, applyLabel: `Apply for ${o.title} at ${c.name} (opens employer site)`,
+          requirements: o.requirements, paragraphs: o.description.split(/\n\n+/),
+          deadline: dl, sortDate: o.deadline_date || '9999-12-31',
+          hasDate: dl.hasDate, noDate: dl.noDate,
+          dateText: dl.hasDate ? (dl.relWord === 'TODAY' ? 'Today' : dl.relWord === 'TOMORROW' ? 'Tomorrow' : o.deadline_date.split('-').reverse().join('/')) : '',
+          dateColor: dl.hasRel ? ACCENT : '#344054', dateWeight: 500,
+          dlLabel: 'DEADLINE', dlLabelColor: '#475467',
+          hasStatus: dl.hasDate && dl.isUrgent, statusText: dl.statusText || '',
+          haystack: [o.title, c.name, o.major.join(' '), o.requirements.join(' ')].join(' ').toLowerCase()
+        };
+      });
+    const sectors = [...new Set(companies.map(c => c.sector))].sort();
+    const majors = [...new Set(opps.flatMap(o => o.majors))].sort();
+    this._for = this.state.data;
+    this._built = { opps, sectors, majors };
+    return this._built;
+  }
+  pass(o, skip) {
+    const s = this.state;
+    const q = s.q.trim().toLowerCase();
+    if (q && !q.split(/\s+/).every(w => o.haystack.includes(w))) return false;
+    if (skip !== 'type' && s.types.length && !s.types.includes(o.typeKey)) return false;
+    if (skip !== 'sector' && s.sectors.length && !s.sectors.includes(o.sector)) return false;
+    if (skip !== 'major' && s.majors.length && !(o.anyMajor || o.majors.some(m => s.majors.includes(m)))) return false;
+    return true;
+  }
+  toggle(k, v) { this.setState(st => ({ [k]: st[k].includes(v) ? st[k].filter(x => x !== v) : [...st[k], v] })); }
+
+  _vals() {
+    const s = this.state, bp = s.bp, m = bp === 'mobile', d = bp === 'desktop';
+    const activeCount = s.types.length + s.sectors.length + s.majors.length;
+    const base = {
+      q: s.q, sort: s.sort, isMobile: m, notMobile: !m,
+      gutter: d ? '32px' : bp === 'tablet' ? '24px' : '16px',
+      headerH: m ? '64px' : '80px', logoSize: m ? '48px' : '64px',
+      mainTop: d ? '64px' : m ? '32px' : '48px',
+      h1Font: m ? '28px/36px' : '36px/44px', h2Font: m ? '22px/30px' : '26px/34px',
+      panelPad: m ? '16px' : '24px', listTop: m ? '32px' : '48px', secGap: m ? '40px' : '56px',
+      rowCols: m ? 'minmax(0,1fr) auto' : d ? '160px minmax(0,1fr) auto' : '136px minmax(0,1fr) auto',
+      rowAreas: m ? '"dl dl" "main act"' : '"dl main act"',
+      rowGap: m ? '12px' : '24px', rowPad: m ? '16px' : '24px', rowPadX: m ? '12px' : '16px', logoCircle: m ? '32px' : '40px',
+      dlAlign: 'center',
+      footTop: d ? '96px' : '64px',
+      activeCount, hasActive: activeCount > 0, showClear: activeCount > 0 || !!s.q.trim(),
+      filtersAria: activeCount ? `Filters, ${activeCount} applied` : 'Filters',
+      filtersBtnRef: this.filtersBtnRef, sheetRef: this.sheetRef, sheetCloseRef: this.sheetCloseRef,
+      menuRef: this.menuRef, menuCloseRef: this.menuCloseRef, menuBtnRef: this.menuBtnRef,
+      showSheet: this.sheetOpen(), menuOpen: this.navOpen(),
+      openMenu: () => this.setState({ menuOpen: true }), closeMenu: () => this.closeMenu(),
+      openFilters: () => this.setState({ filtersOpen: true, majorQuery: '' }),
+      closeFilters: () => this.closeFilters(),
+      clearFilters: () => this.setState({ types: [], sectors: [], majors: [], majorQuery: '' }),
+      onSearch: (e) => this.setState({ q: e.target.value }),
+      onSort: (e) => this.setState({ sort: e.target.value }),
+      clearAll: () => this.setState({ q: '', types: [], sectors: [], majors: [], openMenu: null }),
+      stop: (e) => e.stopPropagation(),
+      closePanel: () => { const t = this.trigger; this.setState({ selectedId: null }, () => { t && t.focus && t.focus(); }); }
+    };
+    if (!s.data) return { ...base, filters: [], rows: [], rolling: [], hasRolling: false, datedSub: '', chips: [], hasChips: false, hasRows: false, isEmpty: false, hasSelected: false, showResultsText: 'Show results' };
+
+    const { opps, sectors, majors } = this.build();
+    const defs = [
+      { key: 'type', stateKey: 'types', name: 'Type', all: 'All types', plural: 'Types', opts: TYPE_ORDER.map(v => ({ value: v, label: TYPE[v] })), has: (o, v) => o.typeKey === v },
+      { key: 'sector', stateKey: 'sectors', name: 'Industry', all: 'All industries', plural: 'Industries', opts: sectors.map(v => ({ value: v, label: v })), has: (o, v) => o.sector === v },
+      { key: 'major', stateKey: 'majors', name: 'Major', all: 'All majors', plural: 'Majors', opts: majors.map(v => ({ value: v, label: v })), has: (o, v) => o.anyMajor || o.majors.includes(v) }
+    ];
+    const labelOf = (df, v) => (df.opts.find(x => x.value === v) || { label: v }).label;
+    const filters = defs.map(df => {
+      const sel = s[df.stateKey];
+      const pool = opps.filter(o => this.pass(o, df.key));
+      const mq = s.majorQuery.trim().toLowerCase();
+      const opts = df.key === 'major' && mq ? df.opts.filter(x => x.label.toLowerCase().includes(mq)) : df.opts;
+      const buttonLabel = sel.length === 0 ? df.all : sel.length === 1 ? labelOf(df, sel[0]) : `${df.plural} · ${sel.length}`;
+      return {
+        key: df.key, name: df.name, buttonLabel, aria: `${df.name}: ${buttonLabel}`, isOpen: s.openMenu === df.key,
+        toggle: () => this.setState(st => ({ openMenu: st.openMenu === df.key ? null : df.key, majorQuery: '' })),
+        hasSearch: df.key === 'major', searchValue: s.majorQuery,
+        onSearch: (e) => this.setState({ majorQuery: e.target.value }), noOptions: opts.length === 0,
+        options: opts.map(x => {
+          const count = pool.filter(o => df.has(o, x.value)).length;
+          const checked = sel.includes(x.value), disabled = count === 0 && !checked;
+          return { ...x, checked, disabled, color: disabled ? '#98a2b3' : '#344054', cursor: disabled ? 'default' : 'pointer', toggle: () => this.toggle(df.stateKey, x.value) };
+        })
+      };
+    });
+    const chips = defs.flatMap(df => s[df.stateKey].map(v => { const label = labelOf(df, v); return { label, aria: `Remove filter: ${label}`, remove: () => this.toggle(df.stateKey, v) }; }));
+
+    let rows = (this.props.previewEmpty || s.urlEmpty) ? [] : opps.filter(o => this.pass(o));
+    const byTitle = (a, b) => a.title.localeCompare(b.title);
+    if (s.sort === 'deadline') rows = [...rows].sort((a, b) => a.sortDate.localeCompare(b.sortDate) || byTitle(a, b));
+    else if (s.sort === 'position') rows = [...rows].sort(byTitle);
+    else rows = [...rows].sort((a, b) => a.company.localeCompare(b.company) || byTitle(a, b));
+    rows = rows.map(o => {
+      return {
+        ...o,
+        open: (e) => { if (e.target.closest('a')) return; this.trigger = e.currentTarget.querySelector('[data-row-trigger]'); this.setState({ selectedId: o.id, openMenu: null }); }
+      };
+    });
+
+    const rolling = rows.filter(o => o.noDate), dated = rows.filter(o => o.hasDate);
+    const selected = opps.find(o => o.id === s.selectedId) || null;
+    return {
+      ...base, filters, chips, hasChips: chips.length > 0,
+      rolling, hasRolling: rolling.length > 0, rows: dated, hasRows: dated.length > 0, isEmpty: rows.length === 0,
+      datedSub: s.sort === 'deadline' ? 'Sorted by soonest deadline.' : s.sort === 'position' ? 'Sorted by position, A–Z.' : 'Sorted by company, A–Z.',
+      showResultsText: `Show ${rows.length} ${rows.length === 1 ? 'result' : 'results'}`,
+      selected, hasSelected: !!selected
+    };
+  }
+}
+</script>
+</body>
+</html>

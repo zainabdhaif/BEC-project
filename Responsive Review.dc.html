@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Poppins:wght@600&display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#efebe7;color:#2b2523;font-family:"IBM Plex Sans",system-ui,sans-serif}
+a{color:#a93d35}
+a:hover{color:#8e322c}
+</style>
+</helmet>
+<section style="padding:64px 64px 0;display:flex;flex-direction:column;gap:24px">
+  <h2 style="margin:0;font:600 28px/36px Poppins,system-ui,sans-serif">About</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Desktop · 1440</span>
+      <iframe src="About.dc.html" title="Desktop · 1440" style="width:1440px;height:1100px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Tablet · 768</span>
+      <iframe src="About.dc.html" title="Tablet · 768" style="width:768px;height:1100px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Mobile · 375</span>
+      <iframe src="About.dc.html" title="Mobile · 375" style="width:375px;height:812px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+  </div>
+</section>
+<section style="padding:64px 64px 0;display:flex;flex-direction:column;gap:24px">
+  <h2 style="margin:0;font:600 28px/36px Poppins,system-ui,sans-serif">Calendar</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Desktop · 1440 · 20 Oct selected</span>
+      <iframe src="Calendar.dc.html?state=day" title="Calendar desktop" style="width:1440px;height:1400px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Tablet · 768</span>
+      <iframe src="Calendar.dc.html" title="Calendar tablet" style="width:768px;height:1400px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Mobile · Agenda</span>
+      <iframe src="Calendar.dc.html" title="Calendar mobile agenda" style="width:375px;height:812px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Mobile · Month, 20 Oct selected</span>
+      <iframe src="Calendar.dc.html?state=day" title="Calendar mobile month" style="width:375px;height:812px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Mobile · Detail from calendar</span>
+      <iframe src="Calendar.dc.html?state=panel" title="Mobile · Detail from calendar" style="width:375px;height:812px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+  </div>
+</section>
+<section style="padding:64px 64px 0;display:flex;flex-direction:column;gap:24px">
+  <h2 style="margin:0;font:600 28px/36px Poppins,system-ui,sans-serif">Opportunities · Desktop 1440px</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">List</span>
+      <iframe src="Opportunities.dc.html" title="List" style="width:1440px;height:1100px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Detail panel</span>
+      <iframe src="Opportunities.dc.html?state=panel" title="Detail panel" style="width:1440px;height:1100px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+  </div>
+</section>
+<section style="padding:64px;display:flex;flex-direction:column;gap:24px">
+  <h2 style="margin:0;font:600 28px/36px Poppins,system-ui,sans-serif">Opportunities · Tablet 768px</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">List</span>
+      <iframe src="Opportunities.dc.html" title="Tablet list" style="width:768px;height:1024px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Detail panel</span>
+      <iframe src="Opportunities.dc.html?state=panel" title="Tablet detail panel" style="width:768px;height:1024px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+  </div>
+</section>
+<section style="padding:0 64px 64px;display:flex;flex-direction:column;gap:24px">
+  <h2 style="margin:0;font:600 28px/36px Poppins,system-ui,sans-serif">Opportunities · Mobile 375px</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">List</span>
+      <iframe src="Opportunities.dc.html" title="Mobile list" style="width:375px;height:812px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Menu</span>
+      <iframe src="Opportunities.dc.html?state=menu" title="Mobile menu" style="width:375px;height:812px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Filters sheet</span>
+      <iframe src="Opportunities.dc.html?state=filters" title="Mobile filters" style="width:375px;height:812px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <span style="font:600 16px/24px 'IBM Plex Sans',system-ui,sans-serif">Detail</span>
+      <iframe src="Opportunities.dc.html?state=panel" title="Mobile detail" style="width:375px;height:812px;border:0;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(43,37,35,0.12)"></iframe>
+    </div>
+  </div>
+</section>
+</x-dc>
+</body>
+</html>

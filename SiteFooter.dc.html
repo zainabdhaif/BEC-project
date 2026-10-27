@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&family=Poppins:wght@600&display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#ffffff;color:#2b2523;font-family:"IBM Plex Sans","IBM Plex Sans Arabic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#a93d35;text-underline-offset:3px}
+a:hover{color:#8e322c}
+:focus-visible{outline:2px solid #a93d35;outline-offset:2px}
+</style>
+</helmet>
+<footer style="background:#faf7f4">
+  <div style="max-width:1264px;margin:0 auto;padding:0 {{ gutter }}">
+    <svg width="50" height="8" viewBox="0 0 50 8" aria-hidden="true" style="display:block"><polygon points="0,0 5,8 10,0 15,8 20,0 25,8 30,0 35,8 40,0 45,8 50,0" fill="#d95d51"></polygon></svg>
+    <div style="display:flex;flex-direction:{{ dir }};align-items:flex-start;gap:{{ outerGap }};padding:48px 0">
+      <a href="Calendar.dc.html" aria-label="Bahrain Early Careers — home" style="display:flex;border-radius:999px;flex:none">
+        <img src="assets/bec-logo.svg" alt="Bahrain Early Careers — home" width="96" height="96" style="display:block;width:96px;height:96px">
+      </a>
+      <nav aria-label="Footer" style="display:flex;flex-direction:{{ dir }};gap:{{ navGap }}">
+        <div style="display:flex;flex-direction:column;gap:{{ linkGap }}">
+          <h2 style="margin:0 0 4px;font:600 12px/16px 'IBM Plex Sans',system-ui,sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:#5e5653">Find</h2>
+          <a href="Calendar.dc.html" style="min-height:44px;display:flex;align-items:center;color:#2b2523;text-decoration:none;font:500 15px/24px 'IBM Plex Sans',system-ui,sans-serif" style-hover="text-decoration:underline">Calendar</a>
+          <a href="Opportunities.dc.html" style="min-height:44px;display:flex;align-items:center;color:#2b2523;text-decoration:none;font:500 15px/24px 'IBM Plex Sans',system-ui,sans-serif" style-hover="text-decoration:underline">Opportunities</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:{{ linkGap }}">
+          <h2 style="margin:0 0 4px;font:600 12px/16px 'IBM Plex Sans',system-ui,sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:#5e5653">About</h2>
+          <a href="About.dc.html" style="min-height:44px;display:flex;align-items:center;color:#2b2523;text-decoration:none;font:500 15px/24px 'IBM Plex Sans',system-ui,sans-serif" style-hover="text-decoration:underline">About us</a>
+          <a href="mailto:hello@bahrainearlycareers.com" style="min-height:44px;display:flex;align-items:center;color:#2b2523;text-decoration:none;font:500 15px/24px 'IBM Plex Sans',system-ui,sans-serif" style-hover="text-decoration:underline">Contact</a>
+        </div>
+      </nav>
+    </div>
+    <p style="margin:0;padding:24px 0;border-top:1px solid #e7dfd9;font:400 14px/22px 'IBM Plex Sans',system-ui,sans-serif;color:#5e5653">© 2026 Bahrain Early Careers</p>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:300}}">
+const bpOf = () => { const w = window.innerWidth; return w < 600 ? 'mobile' : w < 1024 ? 'tablet' : 'desktop'; };
+class Component extends DCLogic {
+  state = { bp: bpOf() };
+  componentDidMount() {
+    this.onResize = () => { const bp = bpOf(); if (bp !== this.state.bp) this.setState({ bp }); };
+    window.addEventListener('resize', this.onResize);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  renderVals() {
+    const bp = this.state.bp, m = bp === 'mobile';
+    return {
+      gutter: bp === 'desktop' ? '32px' : bp === 'tablet' ? '24px' : '16px',
+      dir: m ? 'column' : 'row', outerGap: m ? '32px' : '64px', navGap: m ? '24px' : '64px',
+      linkGap: bp === 'desktop' ? '4px' : '8px'
+    };
+  }
+}
+</script>
+</body>
+</html>
